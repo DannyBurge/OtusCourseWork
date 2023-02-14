@@ -1,17 +1,33 @@
 package com.otuscoursework.navigation
 
-import com.otuscoursework.ui.main.MainActivity
+import com.github.terrakok.cicerone.Router
+import javax.inject.Inject
 
-object CiceroneAppNavigator {
-
-    private val appRouter = MainActivity.INSTANCE.router
-
-    fun toFragment1() {
-        appRouter.navigateTo(Screens.fragment1())
+class CiceroneAppNavigator @Inject constructor(
+    private val appRouter: Router
+) {
+    fun toHomeScreen() {
+        appRouter.navigateTo(Screens.homeScreen())
     }
 
-    fun toFragment2() {
-        appRouter.navigateTo(Screens.fragment2())
+    fun toMenuItemDetailScreen() {
+        appRouter.navigateTo(Screens.menuItemDetailScreen())
+    }
+
+    fun toCartScreen() {
+        appRouter.navigateTo(Screens.cartScreen())
+    }
+
+    fun toOrdersScreen() {
+        appRouter.navigateTo(Screens.ordersScreen())
+    }
+
+    fun toNotificationScreen() {
+        appRouter.navigateTo(Screens.notificationsScreen())
+    }
+
+    fun toSaleScreen() {
+        appRouter.navigateTo(Screens.saleScreen())
     }
 
     fun back() {

@@ -1,23 +1,29 @@
-package com.otuscoursework.ui.fragment1
+package com.otuscoursework.ui.fragments.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.otuscoursework.OtusApplication
 import com.otuscoursework.arch.BaseFragment
 import com.otuscoursework.arch.BaseState
 import com.otuscoursework.databinding.Fragment1Binding
+import com.otuscoursework.di.components.ActivityComponent
+import com.otuscoursework.di.components.DaggerActivityComponent
 import com.otuscoursework.navigation.CiceroneAppNavigator
+import com.otuscoursework.ui.main.MainActivity
+import javax.inject.Inject
 
-class Fragment1 : BaseFragment<Fragment1ViewModel>() {
+class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
 
     private lateinit var fragmentBinding: Fragment1Binding
+    override val viewModel: HomeFragmentViewModel by viewModels()
 
-    override val viewModel = Fragment1ViewModel()
 
     override fun initViews() {
         fragmentBinding.navigateButton.setOnClickListener {
-            CiceroneAppNavigator.toFragment2()
+            ciceroneAppNavigator.toMenuItemDetailScreen()
         }
     }
 
@@ -26,7 +32,8 @@ class Fragment1 : BaseFragment<Fragment1ViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Fragment1State(isLoading = false)
+        HomeFragmentState(isLoading = false)
+        fragmentComponent.inject(this)
         fragmentBinding = Fragment1Binding.inflate(layoutInflater, null, false)
         return fragmentBinding.root
     }
@@ -41,7 +48,7 @@ class Fragment1 : BaseFragment<Fragment1ViewModel>() {
     override fun renderState(state: BaseState) {
         super.renderState(state)
 
-        (state as Fragment1State).apply {
+        (state as HomeFragmentState).apply {
             fragmentBinding.fragment1TextView.text = state.string
         }
     }

@@ -5,12 +5,29 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.otuscoursework.di.components.DaggerFragmentComponent
+import com.otuscoursework.di.components.FragmentComponent
+import com.otuscoursework.navigation.CiceroneAppNavigator
 import com.otuscoursework.ui.main.MainActivity
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 abstract class BaseFragment<out T : BaseViewModel<*>> : Fragment() {
 
     abstract val viewModel: T
+
+    lateinit var fragmentComponent: FragmentComponent
+
+    @Inject
+    lateinit var ciceroneAppNavigator: CiceroneAppNavigator
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fragmentComponent = DaggerFragmentComponent
+            .factory()
+            .create((requireActivity() as MainActivity).activityComponent)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,7 +38,8 @@ abstract class BaseFragment<out T : BaseViewModel<*>> : Fragment() {
 
     abstract fun initViews()
 
-    private fun initObservers() {
+    @CallSuper
+    open fun initObservers() {
         lifecycleScope.launch {
             viewModel.viewModelFlow.collect {
                 renderState(it as BaseState)
@@ -32,11 +50,11 @@ abstract class BaseFragment<out T : BaseViewModel<*>> : Fragment() {
     @CallSuper
     open fun renderState(state: BaseState) {
         if (state.isLoading) showLoading() else hideLoading()
-        if (state.errorMessage != null) showError()
+        if (state.errorMessage != null) showError(state.errorMessage!!)
     }
 
-    private fun showError() {
-
+    private fun showError(msg: String) {
+        (activity as MainActivity).showError(msg)
     }
 
     private fun showLoading() {

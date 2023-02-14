@@ -2,12 +2,17 @@ package com.otuscoursework.arch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.otuscoursework.network.NetworkRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 abstract class BaseViewModel<S> : ViewModel() {
+
+    @Inject
+    lateinit var networkRepository: NetworkRepository
 
     abstract var viewModelState: S
 

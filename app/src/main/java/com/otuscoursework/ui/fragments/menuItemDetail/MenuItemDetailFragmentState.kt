@@ -1,9 +1,9 @@
-package com.otuscoursework.ui.fragment1
+package com.otuscoursework.ui.fragments.menuItemDetail
 
 import com.otuscoursework.arch.BaseState
 
-data class Fragment1State(
+data class MenuItemDetailFragmentState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
-    val string: String = "Just started fragment 1",
+    val string: String = "",
 ) : BaseState

@@ -1,17 +1,22 @@
-package com.otuscoursework.ui.fragment1
+package com.otuscoursework.ui.fragments.home
 
 import androidx.lifecycle.viewModelScope
 import com.otuscoursework.arch.BaseViewModel
 import com.otuscoursework.utils_and_ext.DEBUG_TAG
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class Fragment1ViewModel : BaseViewModel<Fragment1State>() {
+@HiltViewModel
+class HomeFragmentViewModel @Inject constructor(
+) : BaseViewModel<HomeFragmentState>() {
 
-    override var viewModelState = Fragment1State()
+    override var viewModelState = HomeFragmentState()
 
     fun onOpen() {
+
         viewModelScope.launch {
             viewModelState.copy(isLoading = true).render()
             delay(5000)
