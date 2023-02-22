@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Main sizes-->
+    <dimen name="size_xxx_small">4dp</dimen>
+    <dimen name="size_xx_small">8dp</dimen>
+    <dimen name="size_x_small">16dp</dimen>
+    <dimen name="size_small">20dp</dimen>
+    <dimen name="size_medium">24dp</dimen>
+    <dimen name="size_large">32dp</dimen>
+    <dimen name="size_x_large">48dp</dimen>
+    <dimen name="size_xx_large">56dp</dimen>
+    <dimen name="size_xxx_large">108dp</dimen>
+
+    <!--Main text sizes-->
+    <dimen name="textXXXSmallSize">10sp</dimen>
+    <dimen name="textXXSmallSize">12sp</dimen>
+    <dimen name="textXSmallSize">14sp</dimen>
+    <dimen name="textSmallSize">16sp</dimen>
+    <dimen name="textMediumSize">24sp</dimen>
+    <dimen name="textLargeSize">32sp</dimen>
+    <dimen name="textXLargeSize">40sp</dimen>
+    <dimen name="textXXLargeSize">48sp</dimen>
+
+    <!--Elevation-->
+    <dimen name="elevation">@dimen/size_xxx_small</dimen>
+
+    <!--Margins-->
+    <dimen name="marginXXXSmall">@dimen/size_xxx_small</dimen>
+    <dimen name="marginXXSmall">@dimen/size_xx_small</dimen>
+    <dimen name="marginXSmall">@dimen/size_x_small</dimen>
+    <dimen name="marginSmall">@dimen/size_small</dimen>
+    <dimen name="marginMedium">@dimen/size_medium</dimen>
+    <dimen name="marginLarge">@dimen/size_large</dimen>
+    <dimen name="marginXXXLarge">@dimen/size_xxx_large</dimen>
+
+    <!--Cards-->
+    <dimen name="carCornerRadius">@dimen/size_small</dimen>
+
+    <!--Round buttons sizes-->
+    <dimen name="roundButtonBgSizeXLarge">@dimen/size_x_large</dimen>
+    <dimen name="roundButtonBgSizeXXLarge">@dimen/size_xx_large</dimen>
+
+    <dimen name="roundButtonIconSizeSmall">@dimen/size_small</dimen>
+    <dimen name="roundButtonIconSizeMedium">@dimen/size_medium</dimen>
+</resources>

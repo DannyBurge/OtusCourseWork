@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.otuscoursework.arch.BaseFragment
 import com.otuscoursework.arch.BaseState
-import com.otuscoursework.databinding.Fragment2Binding
-import com.otuscoursework.navigation.CiceroneAppNavigator
+import com.otuscoursework.databinding.FragmentMenuItemDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+
 @AndroidEntryPoint
 class MenuItemDetailFragment : BaseFragment<MenuItemDetailFragmentViewModel>() {
 
     override val viewModel: MenuItemDetailFragmentViewModel by viewModels()
 
-    private lateinit var fragmentBinding: Fragment2Binding
+    private lateinit var fragmentBinding: FragmentMenuItemDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +23,7 @@ class MenuItemDetailFragment : BaseFragment<MenuItemDetailFragmentViewModel>() {
         savedInstanceState: Bundle?
     ): View? {
         fragmentComponent.inject(this)
-        fragmentBinding = Fragment2Binding.inflate(layoutInflater, null, false)
+        fragmentBinding = FragmentMenuItemDetailBinding.inflate(layoutInflater, null, false)
         return fragmentBinding.root
     }
 

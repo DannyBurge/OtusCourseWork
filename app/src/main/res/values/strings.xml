@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">OtusCourseWork</string>
+    <string name="app_name">OTUS Kitchen</string>
+
+    <!--Home Fragment-->
+    <string name="mainTitle">OTUS</string>
+    <string name="mainSubTitle">KITCHEN</string>
+
+    <!--Balance Panel-->
+    <string name="balancePanelTitle">Мои баллы:</string>
+    <string name="addTokensButtonTitle">Пополнение</string>
+    <string name="saleButtonTitle">Акции</string>
+    <string name="notificationsButtonTitle">Уведомления</string>
+
+    <string name="showOptionsShowAll">Показать все</string>
+    <string name="showOptionsShowFavourite">Избранное</string>
 </resources>

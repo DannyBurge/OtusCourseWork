@@ -17,6 +17,11 @@ class CartKeeper @Inject constructor() {
         _cartContent.emit(updatedList)
     }
 
+    suspend fun removeItemFromCart(item: CartCheckItemUiModel) {
+        val updatedList = _cartContent.value.filter { it != item }
+        _cartContent.emit(updatedList)
+    }
+
     suspend fun clearCart() {
         _cartContent.emit(emptyList())
     }

@@ -21,7 +21,7 @@ class MenuItemDetailFragmentViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             viewModelState.copy(isLoading = true).render()
 
-            val stringGotten = networkRepository.someGetRequest("query_1")
+            val stringGotten = ""
 
             delay(5000)
 

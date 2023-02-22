@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/top_panel_bg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleText"
+        style="@style/TitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mainTitle"
+        app:layout_constraintBottom_toTopOf="@id/subTitleText"
+        app:layout_constraintEnd_toEndOf="@id/subTitleText"
+        app:layout_constraintStart_toStartOf="@id/subTitleText" />
+
+    <TextView
+        android:id="@+id/subTitleText"
+        style="@style/SubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginSmall"
+        android:layout_marginBottom="@dimen/marginXSmall"
+        android:text="@string/mainSubTitle"
+        app:layout_constraintBottom_toTopOf="@id/balancePanel"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.otuscoursework.view.badge_button.ButtonWithBadge
+        android:id="@+id/toCartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginXSmall"
+        android:layout_marginEnd="@dimen/marginXSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.otuscoursework.view.badge_button.ButtonWithBadge
+        android:id="@+id/toOrdersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginXSmall"
+        android:layout_marginEnd="@dimen/marginXSmall"
+        app:layout_constraintEnd_toStartOf="@id/toCartButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/balancePanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/marginXXXLarge"
+        android:layout_marginEnd="@dimen/marginXSmall"
+        android:background="@drawable/card_panel_bg"
+        android:elevation="@dimen/elevation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/balancePanelTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginXSmall"
+            android:includeFontPadding="false"
+            android:text="@string/balancePanelTitle"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textXSmallSize"
+            app:layout_constraintBottom_toTopOf="@id/balancePanelBalance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/balancePanelBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginXSmall"
+            android:includeFontPadding="false"
+            android:text="9999"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textXLargeSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/balancePanelTitle" />
+
+        <com.otuscoursework.view.badge_button.ButtonWithBadge
+            android:id="@+id/toAddTokensButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginXSmall"
+            android:layout_marginEnd="@dimen/marginXSmall"
+            app:layout_constraintEnd_toStartOf="@id/toSaleButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/toAddTokensButtonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginXSmall"
+            android:text="@string/addTokensButtonTitle"
+            android:textSize="@dimen/textXXXSmallSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/toAddTokensButton"
+            app:layout_constraintStart_toStartOf="@id/toAddTokensButton"
+            app:layout_constraintTop_toBottomOf="@id/toAddTokensButton" />
+
+        <com.otuscoursework.view.badge_button.ButtonWithBadge
+            android:id="@+id/toSaleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginXSmall"
+            android:layout_marginEnd="@dimen/marginXSmall"
+            app:layout_constraintEnd_toStartOf="@id/toNotificationButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/toSaleButtonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginXSmall"
+            android:text="@string/saleButtonTitle"
+            android:textSize="@dimen/textXXXSmallSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/toSaleButton"
+            app:layout_constraintStart_toStartOf="@id/toSaleButton"
+            app:layout_constraintTop_toBottomOf="@id/toSaleButton" />
+
+        <com.otuscoursework.view.badge_button.ButtonWithBadge
+            android:id="@+id/toNotificationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginXSmall"
+            android:layout_marginEnd="@dimen/marginSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/toNotificationButtonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginXSmall"
+            android:text="@string/notificationsButtonTitle"
+            android:textSize="@dimen/textXXXSmallSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/toNotificationButton"
+            app:layout_constraintStart_toStartOf="@id/toNotificationButton"
+            app:layout_constraintTop_toBottomOf="@id/toNotificationButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/showOptionsButton"
+        style="@style/ShowOptions"
+        android:textSize="@dimen/textXSmallSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginSmall"
+        android:layout_marginTop="@dimen/marginMedium"
+        android:text="Показать всё"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/balancePanel" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chipsRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/marginXSmall"
+        android:layout_marginEnd="@dimen/marginXSmall"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showOptionsButton" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menuRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/marginXSmall"
+        android:layout_marginEnd="@dimen/marginXSmall"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chipsRecyclerView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

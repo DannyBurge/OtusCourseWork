@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/top_panel_bg"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainActivityFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
     </androidx.fragment.app.FragmentContainerView>
 
