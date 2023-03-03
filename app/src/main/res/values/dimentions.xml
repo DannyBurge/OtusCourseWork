@@ -31,10 +31,13 @@
     <dimen name="marginSmall">@dimen/size_small</dimen>
     <dimen name="marginMedium">@dimen/size_medium</dimen>
     <dimen name="marginLarge">@dimen/size_large</dimen>
+    <dimen name="marginXXLarge">@dimen/size_xx_large</dimen>
+    <dimen name="marginXLarge">@dimen/size_x_large</dimen>
     <dimen name="marginXXXLarge">@dimen/size_xxx_large</dimen>
 
     <!--Cards-->
-    <dimen name="carCornerRadius">@dimen/size_small</dimen>
+    <dimen name="cardCornerRadius">@dimen/size_small</dimen>
+    <dimen name="cardCornerRadiusBig">@dimen/size_medium</dimen>
 
     <!--Round buttons sizes-->
     <dimen name="roundButtonBgSizeXLarge">@dimen/size_x_large</dimen>

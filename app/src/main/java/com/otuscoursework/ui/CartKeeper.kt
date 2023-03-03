@@ -18,7 +18,9 @@ class CartKeeper @Inject constructor() {
     }
 
     suspend fun removeItemFromCart(item: CartCheckItemUiModel) {
-        val updatedList = _cartContent.value.filter { it != item }
+        val updatedList = _cartContent.value.toMutableList()
+        updatedList.remove(item)
+
         _cartContent.emit(updatedList)
     }
 

@@ -11,9 +11,6 @@ import javax.inject.Inject
 
 abstract class BaseViewModel<S> : ViewModel() {
 
-    @Inject
-    lateinit var networkRepository: NetworkRepository
-
     abstract var viewModelState: S
 
     private val _viewModelFlow = MutableSharedFlow<S>()

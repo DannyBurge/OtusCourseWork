@@ -13,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MenuItemDetailFragmentViewModel @Inject constructor(
+    val networkRepository: NetworkRepository
 ) : BaseViewModel<MenuItemDetailFragmentState>() {
 
     override var viewModelState = MenuItemDetailFragmentState()

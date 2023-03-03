@@ -42,7 +42,6 @@
 
     <!--Text styles-->
     <style name="MainTextStyle">
-        <item name="android:fontFamily">Roboto</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">normal</item>
         <item name="android:includeFontPadding">false</item>

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.otuscoursework.R
-import com.otuscoursework.databinding.RoundButtonBinding
+import com.otuscoursework.databinding.ViewRoundButtonBinding
 
 class ButtonWithBadge @JvmOverloads constructor(
     context: Context,
@@ -14,7 +14,7 @@ class ButtonWithBadge @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding = RoundButtonBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding = ViewRoundButtonBinding.inflate(LayoutInflater.from(context), this, true)
 
     var counter: Int = 0
         private set
@@ -25,8 +25,10 @@ class ButtonWithBadge @JvmOverloads constructor(
 
     fun updateBadge(badgeValue: Int = 0) {
         counter = badgeValue
-        binding.badgeNumber.isVisible = badgeValue != 0
-        binding.badgeNumber.text = badgeValue.toString()
+        binding.badgeNumber.apply {
+            isVisible = badgeValue != 0
+            text = badgeValue.toString()
+        }
     }
 
     fun setButtonType(typeButton: ButtonType) {

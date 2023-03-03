@@ -4,6 +4,8 @@
     android:height="100dp"
     android:viewportWidth="100"
     android:viewportHeight="100">
-    <solid android:color="@color/white" />
-    <corners android:radius="@dimen/cardCornerRadius" />
+    <solid android:color="@color/gray" />
+    <corners
+        android:topLeftRadius="@dimen/cardCornerRadius"
+        android:bottomRightRadius="@dimen/cardCornerRadius"/>
 </shape>

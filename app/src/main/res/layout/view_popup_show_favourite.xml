@@ -10,10 +10,12 @@
 
     <TextView
         android:id="@+id/showOptionsShowFavouriteOption"
-        style="@style/ShowOptions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:layout_marginHorizontal="@dimen/marginXXSmall"
+        android:layout_marginVertical="@dimen/marginXXSmall"
+        android:textSize="@dimen/textXSmallSize"
         android:text="@string/showOptionsShowFavourite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +23,11 @@
 
     <TextView
         android:id="@+id/showOptionsShowAllOption"
-        style="@style/ShowOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textXSmallSize"
+        android:layout_marginHorizontal="@dimen/marginXXSmall"
+        android:layout_marginVertical="@dimen/marginXXSmall"
         android:text="@string/showOptionsShowAll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

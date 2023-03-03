@@ -5,7 +5,7 @@ import com.otuscoursework.arch.recycler.RecyclerViewItem
 data class CartCheckItemUiModel(
     override val id: Int,
     val name: String,
-    val count: Int,
+    var count: Int,
     val price: Int
 ) : RecyclerViewItem {
 }

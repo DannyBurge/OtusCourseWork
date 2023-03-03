@@ -10,7 +10,17 @@ data class MenuItemUiModel(
     val description: String,
     var isInFavourite: Boolean,
     val sizes: List<MenuItemSizeUiModel>,
-) : RecyclerViewItem
+    var amountInCart: Int = 0,
+) : RecyclerViewItem {
+    fun toCartItem(itemSizeNum: Int = 1): CartCheckItemUiModel {
+        return CartCheckItemUiModel(
+            id = this.id,
+            name = this.name,
+            count = 1,
+            price = this.sizes[itemSizeNum].price
+        )
+    }
+}
 
 data class MenuItemSizeUiModel(
     val sizeId: Int,

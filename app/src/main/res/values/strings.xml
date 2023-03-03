@@ -13,4 +13,12 @@
 
     <string name="showOptionsShowAll">Показать все</string>
     <string name="showOptionsShowFavourite">Избранное</string>
+
+    <!--Dialog-->
+    <string name="dialogAddPromoTitle">Введите промокод</string>
+    <string name="dialogAddAddressTitle">Добавить адрес</string>
+    <string name="dialogClearCartTitle">Очистить корзину?</string>
+
+    <string name="dialogOkButtonTitle">Подтвердить</string>
+    <string name="dialogCancelButtonTitle">Отмена</string>
 </resources>

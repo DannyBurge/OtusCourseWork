@@ -15,9 +15,10 @@ object ChipAdapterDelegate {
             { layoutInflater, root -> ItemChipBinding.inflate(layoutInflater, root, false) }) {
             bind {
                 binding.apply {
+                    chipCategoryName.text = item.name
                     root.setSafeOnClickListener {
-                        filterItems.invoke(item)
                         item.isSelected = !item.isSelected
+                        filterItems.invoke(item)
                     }
                     selectedIndicator.isVisible = item.isSelected
                 }

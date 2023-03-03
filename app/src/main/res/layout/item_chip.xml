@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/card_panel_bg"
+    android:layout_margin="@dimen/marginXXXSmall"
     android:elevation="@dimen/elevation">
 
     <View
@@ -24,11 +25,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:paddingHorizontal="@dimen/marginXXSmall"
-        android:paddingVertical="@dimen/marginXXXSmall"
+        android:paddingHorizontal="@dimen/marginSmall"
+        android:paddingVertical="@dimen/marginXXSmall"
         android:text="Пицца"
         android:textColor="@color/black"
-        android:textSize="@dimen/textXSmallSize"
+        android:textSize="@dimen/textSmallSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -157,23 +157,27 @@
     <TextView
         android:id="@+id/showOptionsButton"
         style="@style/ShowOptions"
-        android:textSize="@dimen/textXSmallSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marginSmall"
+
+        android:layout_marginStart="@dimen/marginMedium"
         android:layout_marginTop="@dimen/marginMedium"
+
         android:text="Показать всё"
+        android:textSize="@dimen/textXSmallSize"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/balancePanel" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chipsRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+
         android:layout_marginStart="@dimen/marginXSmall"
         android:layout_marginTop="@dimen/marginXSmall"
         android:layout_marginEnd="@dimen/marginXSmall"
-        android:orientation="horizontal"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/showOptionsButton" />
@@ -182,10 +186,12 @@
         android:id="@+id/menuRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+
         android:layout_marginStart="@dimen/marginXSmall"
         android:layout_marginTop="@dimen/marginXSmall"
         android:layout_marginEnd="@dimen/marginXSmall"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chipsRecyclerView" />
