@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/RoundButtonDarkXLarge">
 
+    <View
+        android:id="@+id/favouriteIndicator"
+        style="@style/RoundButtonDarkXLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/coral_200"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/roundButtonIcon"
         style="@style/RoundButtonIcon.Small"
@@ -14,7 +22,7 @@
         android:id="@+id/badgeNumber"
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:background="@drawable/round_button_bg"
+        android:background="@drawable/bg_round_button"
         android:backgroundTint="@color/coral_200"
         android:gravity="center"
         android:includeFontPadding="false"

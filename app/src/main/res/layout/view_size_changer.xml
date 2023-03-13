@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_x_large"
+
+        android:layout_margin="@dimen/marginXXXSmall"
+        android:background="@drawable/bg_card_panel"
+        android:elevation="@dimen/elevation"
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button_left"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Мал."
+            android:textSize="@dimen/textSmallSize" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/marginXXXSmall" />
+
+        <RadioButton
+            android:id="@+id/radioCenter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button_center"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Сред."
+            android:textSize="@dimen/textSmallSize" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/marginXXXSmall" />
+
+        <RadioButton
+            android:id="@+id/radioRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button_right"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Бол."
+            android:textSize="@dimen/textSmallSize" />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

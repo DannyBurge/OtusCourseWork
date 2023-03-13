@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.otuscoursework.view.size_changer.SizeChanger
+        android:id="@+id/sizeChanger"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginXSmall"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.otuscoursework.view.expandable_button.ExpandableButton
+        android:id="@+id/addRemoveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginXSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/toCartButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sizeChanger" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/toCartButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_x_large"
+
+        android:layout_marginEnd="@dimen/marginXSmall"
+        android:background="@drawable/bg_expandable_button"
+        android:backgroundTint="@color/coral_200"
+        android:elevation="@dimen/elevation"
+        android:includeFontPadding="false"
+        android:text="Перейти в корзину"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSmallSize"
+
+        app:layout_constraintBottom_toBottomOf="@+id/addRemoveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addRemoveButton"
+        app:layout_constraintTop_toTopOf="@+id/addRemoveButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

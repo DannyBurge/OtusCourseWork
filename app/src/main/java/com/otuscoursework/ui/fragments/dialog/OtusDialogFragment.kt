@@ -49,6 +49,7 @@ class OtusDialogFragment() : DialogFragment() {
     }
 
     companion object {
+        const val DIALOG_TAG = "otusDialog"
         private const val DIALOG_TYPE = "dialogType"
 
         fun newInstance(dialogType: DialogType): OtusDialogFragment {

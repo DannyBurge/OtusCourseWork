@@ -12,8 +12,8 @@ class CartKeeper @Inject constructor() {
     private val _cartContent = MutableStateFlow<List<CartCheckItemUiModel>>(mutableListOf())
     private val cartContent: StateFlow<List<CartCheckItemUiModel>> = _cartContent
 
-    suspend fun addItemToCart(newItem: CartCheckItemUiModel) {
-        val updatedList = _cartContent.value + newItem
+    suspend fun addItemToCart(item: CartCheckItemUiModel) {
+        val updatedList = _cartContent.value + item
         _cartContent.emit(updatedList)
     }
 

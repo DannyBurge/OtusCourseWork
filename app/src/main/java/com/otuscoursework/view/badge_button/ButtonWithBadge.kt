@@ -1,9 +1,11 @@
 package com.otuscoursework.view.badge_button
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import com.otuscoursework.R
 import com.otuscoursework.databinding.ViewRoundButtonBinding
@@ -31,9 +33,15 @@ class ButtonWithBadge @JvmOverloads constructor(
         }
     }
 
+    fun showIndicator(isVisible: Boolean = true) {
+        binding.favouriteIndicator.isVisible = isVisible
+    }
+
     fun setButtonType(typeButton: ButtonType) {
         binding.roundButtonIcon.setImageResource(
             when (typeButton) {
+                ButtonType.TOP -> iconTop
+                ButtonType.DOWN -> iconDown
                 ButtonType.BACK -> iconBack
                 ButtonType.CART -> iconCart
                 ButtonType.NOTIFICATION -> iconNotification
@@ -56,12 +64,16 @@ class ButtonWithBadge @JvmOverloads constructor(
         }
     }
 
-    private val iconBack = R.drawable.icon_back
-    private val iconCart = R.drawable.icon_cart
-    private val iconNotification = R.drawable.icon_bell
-    private val iconHeart = R.drawable.icon_heart
-    private val iconList = R.drawable.icon_list
-    private val iconSale = R.drawable.icon_sale
-    private val iconAddTokens = R.drawable.icon_add_token
-    private val iconTrash = R.drawable.icon_trash
+    companion object {
+        private const val iconTop = R.drawable.icon_top
+        private const val iconDown = R.drawable.icon_down
+        private const val iconBack = R.drawable.icon_back
+        private const val iconCart = R.drawable.icon_cart
+        private const val iconNotification = R.drawable.icon_bell
+        private const val iconHeart = R.drawable.icon_heart
+        private const val iconList = R.drawable.icon_list
+        private const val iconSale = R.drawable.icon_sale
+        private const val iconAddTokens = R.drawable.icon_add_token
+        private const val iconTrash = R.drawable.icon_trash
+    }
 }

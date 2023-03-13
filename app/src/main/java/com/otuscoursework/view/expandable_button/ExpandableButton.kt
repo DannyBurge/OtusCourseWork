@@ -31,8 +31,8 @@ class ExpandableButton @JvmOverloads constructor(
         plusButtonCallback: PlusButtonCallback
     ) {
         binding.plusButton.setSafeOnClickListener {
-            changeCounter()
             plusButtonCallback.invoke()
+            changeCounter()
         }
     }
 
@@ -40,8 +40,8 @@ class ExpandableButton @JvmOverloads constructor(
         minusButtonCallback: MinusButtonCallback
     ) {
         binding.minusButton.setSafeOnClickListener {
-            changeCounter()
             minusButtonCallback.invoke()
+            changeCounter()
         }
     }
 

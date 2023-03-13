@@ -1,7 +1,10 @@
 package com.otuscoursework.ui.models
 
+import android.os.Parcelable
 import com.otuscoursework.arch.recycler.RecyclerViewItem
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class MenuItemUiModel(
     override val id: Int,
     val name: String,
@@ -9,21 +12,15 @@ data class MenuItemUiModel(
     val picture: String,
     val description: String,
     var isInFavourite: Boolean,
-    val sizes: List<MenuItemSizeUiModel>,
+    val size: MenuItemSizeUiModel,
     var amountInCart: Int = 0,
-) : RecyclerViewItem {
-    fun toCartItem(itemSizeNum: Int = 1): CartCheckItemUiModel {
+) : RecyclerViewItem, Parcelable {
+    fun toCartItem(): CartCheckItemUiModel {
         return CartCheckItemUiModel(
             id = this.id,
             name = this.name,
             count = 1,
-            price = this.sizes[itemSizeNum].price
+            price = this.size.price
         )
     }
 }
-
-data class MenuItemSizeUiModel(
-    val sizeId: Int,
-    val price: Int,
-    val displayName: String,
-)

@@ -2,7 +2,7 @@
 <resources>
     <!--Round button styles-->
     <style name="RoundButton">
-        <item name="android:background">@drawable/round_button_bg</item>
+        <item name="android:background">@drawable/bg_round_button</item>
         <item name="android:backgroundTint">@color/white_transparent_25</item>
 <!--        <item name="android:clickable">true</item>-->
 <!--        <item name="android:focusable">true</item>-->
@@ -61,5 +61,19 @@
 
     <style name="ShowOptions" parent="MainTextStyle">
         <item name="android:textSize">@dimen/textXSmallSize</item>
+    </style>
+
+    <style name="Base.Theme.App" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="bottomSheetStyle">@style/StandardBottomSheet</item>
+    </style>
+
+    <style name="StandardBottomSheet">
+        <item name="behavior_hideable">true</item>
+        <item name="behavior_draggable">true</item>
+        <item name="behavior_skipCollapsed">false</item>
+        <item name="behavior_fitToContents">true</item>
+        <item name="behavior_peekHeight">200dp</item>
+        <item name="state_collapsed">true</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
     </style>
 </resources>

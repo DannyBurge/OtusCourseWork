@@ -1,6 +1,7 @@
 package com.otuscoursework.navigation
 
 import com.github.terrakok.cicerone.Router
+import com.otuscoursework.ui.models.MenuItemUiModel
 import javax.inject.Inject
 
 class CiceroneAppNavigator @Inject constructor(
@@ -8,10 +9,6 @@ class CiceroneAppNavigator @Inject constructor(
 ) {
     fun toHomeScreen() {
         appRouter.navigateTo(Screens.homeScreen())
-    }
-
-    fun toMenuItemDetailScreen() {
-        appRouter.navigateTo(Screens.menuItemDetailScreen())
     }
 
     fun toCartScreen() {
@@ -22,8 +19,8 @@ class CiceroneAppNavigator @Inject constructor(
         appRouter.navigateTo(Screens.ordersScreen())
     }
 
-    fun toNotificationScreen() {
-        appRouter.navigateTo(Screens.notificationsScreen())
+    fun toNotificationScreen(orderId: Int = 0) {
+        appRouter.navigateTo(Screens.notificationsScreen(orderId))
     }
 
     fun toSaleScreen() {

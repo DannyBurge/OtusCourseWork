@@ -5,8 +5,6 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.otuscoursework.di.components.DaggerFragmentComponent
-import com.otuscoursework.di.components.FragmentComponent
 import com.otuscoursework.navigation.CiceroneAppNavigator
 import com.otuscoursework.ui.main.MainActivity
 import kotlinx.coroutines.launch
@@ -16,18 +14,8 @@ abstract class BaseFragment<out T : BaseViewModel<*>> : Fragment() {
 
     abstract val viewModel: T
 
-    lateinit var fragmentComponent: FragmentComponent
-
     @Inject
     lateinit var ciceroneAppNavigator: CiceroneAppNavigator
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        fragmentComponent = DaggerFragmentComponent
-            .factory()
-            .create((requireActivity() as MainActivity).activityComponent)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

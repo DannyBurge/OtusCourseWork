@@ -5,6 +5,10 @@
     <string name="mainTitle">OTUS</string>
     <string name="mainSubTitle">KITCHEN</string>
 
+    <string name="sizeLeft">Мал.</string>
+    <string name="sizeCenter">Сред.</string>
+    <string name="sizeRight">Бол.</string>
+
     <!--Balance Panel-->
     <string name="balancePanelTitle">Мои баллы:</string>
     <string name="addTokensButtonTitle">Пополнение</string>
@@ -21,4 +25,12 @@
 
     <string name="dialogOkButtonTitle">Подтвердить</string>
     <string name="dialogCancelButtonTitle">Отмена</string>
+
+    <!--Menu Item Detail Fragment-->
+    <string name="weightInfoTitle">Вес</string>
+    <string name="ccalInfoTitle">Ккал</string>
+    <string name="proteinsInfoTitle">Белки</string>
+    <string name="fatsInfoTitle">Жиры</string>
+    <string name="carbohydratesInfoTitle">Углеводы</string>
+
 </resources>

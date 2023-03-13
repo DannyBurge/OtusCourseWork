@@ -3,13 +3,9 @@ package com.otuscoursework.ui.fragments.home
 import androidx.lifecycle.viewModelScope
 import com.otuscoursework.arch.BaseViewModel
 import com.otuscoursework.network.NetworkRepository
-import com.otuscoursework.network.models.BalanceHistoryItem
-import com.otuscoursework.network.models.CategoryItem
-import com.otuscoursework.network.models.MenuItem
-import com.otuscoursework.network.models.MenuItemSize
+import com.otuscoursework.network.models.*
 import com.otuscoursework.ui.models.ChipItemUiModel
-import com.otuscoursework.ui.models.MenuItemSizeUiModel
-import com.otuscoursework.ui.models.MenuItemUiModel
+import com.otuscoursework.ui.models.MenuItemModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -55,10 +51,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 1",
                     description = "Это пицца 1",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
                 MenuItem(
                     id = 1,
@@ -67,10 +64,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 2",
                     description = "Это пицца 2",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
                 MenuItem(
                     id = 2,
@@ -79,10 +77,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 3",
                     description = "Это пицца 3",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
                 MenuItem(
                     id = 3,
@@ -91,10 +90,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 4",
                     description = "Это пицца 4",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
                 MenuItem(
                     id = 4,
@@ -103,10 +103,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 5",
                     description = "Это пицца 5",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
                 MenuItem(
                     id = 5,
@@ -115,10 +116,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 6",
                     description = "Это пицца 6",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
                 MenuItem(
                     id = 6,
@@ -127,10 +129,11 @@ class HomeFragmentViewModel @Inject constructor(
                     name = "Пицца 7",
                     description = "Это пицца 7",
                     sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "100"),
-                        MenuItemSize(sizeId = 1, 200, "200"),
-                        MenuItemSize(sizeId = 2, 300, "300")
-                    )
+                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
+                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
+                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
+                    ),
+                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
                 ),
             )
 
@@ -157,24 +160,9 @@ class HomeFragmentViewModel @Inject constructor(
         }
     }
 
-    private fun List<MenuItem>.toUiMenu(): List<MenuItemUiModel> {
+    private fun List<MenuItem>.toUiMenu(): List<MenuItemModel> {
         return this.map { menuItem ->
-            val sizes = menuItem.sizes.map { size ->
-                MenuItemSizeUiModel(
-                    sizeId = size.sizeId,
-                    price = size.price,
-                    displayName = size.displayName
-                )
-            }
-            MenuItemUiModel(
-                id = menuItem.id,
-                name = menuItem.name,
-                categoryId = menuItem.categoryId,
-                picture = menuItem.picture,
-                description = menuItem.description,
-                sizes = sizes,
-                isInFavourite = listOf(true, false).random()
-            )
+            MenuItemModel.from(menuItem)
         }
     }
 }

@@ -4,6 +4,8 @@ plugins {
 
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -51,7 +53,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Material Design Components https://github.com/material-components/material-components-android
-    implementation 'com.google.android.material:material:1.9.0-alpha01'
+    implementation 'com.google.android.material:material:1.9.0-alpha02'
 
     // Moshi https://github.com/square/moshi
     implementation 'com.squareup.moshi:moshi:1.14.0'

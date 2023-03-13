@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/top_panel_bg"
+        android:background="@drawable/bg_top_panel"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -56,7 +56,7 @@
         android:layout_marginStart="@dimen/marginXSmall"
         android:layout_marginTop="@dimen/marginXXXLarge"
         android:layout_marginEnd="@dimen/marginXSmall"
-        android:background="@drawable/card_panel_bg"
+        android:background="@drawable/bg_card_panel"
         android:elevation="@dimen/elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,6 +182,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/showOptionsButton" />
 
+    <com.otuscoursework.view.size_changer.SizeChanger
+        android:id="@+id/sizeChanger"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/marginXSmall"
+        android:layout_marginEnd="@dimen/marginXSmall"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chipsRecyclerView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menuRecyclerView"
         android:layout_width="0dp"
@@ -194,6 +207,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipsRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@id/sizeChanger" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,25 +15,13 @@ import dagger.hilt.android.scopes.FragmentScoped
 @Component(
     dependencies = [ActivityComponent::class],
 )
-interface FragmentComponent {
+interface FragmentSaleComponent {
     @Component.Factory
     interface Factory {
-        fun create(activityComponent: ActivityComponent): FragmentComponent
+        fun create(activityComponent: ActivityComponent): FragmentSaleComponent
     }
 
     fun provideAppNavigator() : CiceroneAppNavigator
-
-    fun provideCartKeeper(): CartKeeper
-
-    fun inject(fragment: HomeFragment)
-
-    fun inject(fragment: MenuItemDetailFragment)
-
-    fun inject(fragment: CartFragment)
-
-    fun inject(fragment: NotificationFragment)
-
-    fun inject(fragment: OrdersFragment)
 
     fun inject(fragment: SaleFragment)
 }

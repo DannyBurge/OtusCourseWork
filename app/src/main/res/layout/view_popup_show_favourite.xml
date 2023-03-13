@@ -6,7 +6,7 @@
     android:paddingHorizontal="@dimen/marginXXSmall"
     android:paddingVertical="@dimen/marginXXXSmall"
     android:elevation="@dimen/elevation"
-    android:background="@drawable/card_panel_bg">
+    android:background="@drawable/bg_card_panel">
 
     <TextView
         android:id="@+id/showOptionsShowFavouriteOption"

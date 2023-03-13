@@ -2,33 +2,36 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/marginXXXSmall"
+    android:background="@drawable/bg_expandable_button"
+    android:elevation="@dimen/elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/minusContainer"
-        android:layout_width="0dp"
+        android:layout_width="144dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/expandable_button_bg"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/plusButton"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/minusButton"
-            android:layout_width="@dimen/size_large"
-            android:layout_height="@dimen/size_large"
-            android:padding="10dp"
+            android:layout_width="@dimen/size_x_large"
+            android:layout_height="@dimen/size_x_large"
+            android:padding="16dp"
             android:src="@drawable/icon_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/counterText"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/round_button_bg"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_round_button"
             android:backgroundTint="@color/white"
             android:gravity="center"
             android:text="1"
@@ -42,14 +45,15 @@
 
     <ImageView
         android:id="@+id/plusButton"
-        android:layout_width="@dimen/size_large"
-        android:layout_height="@dimen/size_large"
-        android:layout_marginStart="64dp"
-        android:background="@drawable/round_button_bg"
+        android:layout_width="@dimen/size_x_large"
+        android:layout_height="@dimen/size_x_large"
+        android:background="@drawable/bg_round_button"
         android:backgroundTint="@color/gold_200"
-        android:padding="10dp"
+        android:elevation="@dimen/elevation"
+        android:padding="16dp"
         android:src="@drawable/icon_plus"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

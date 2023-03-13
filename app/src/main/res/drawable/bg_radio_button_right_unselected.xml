@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1000dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <solid android:color="@color/white" />
+    <corners
+        android:topRightRadius="@dimen/cardCornerRadius"
+        android:bottomRightRadius="@dimen/cardCornerRadius" />
+</shape>

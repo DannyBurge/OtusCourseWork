@@ -17,13 +17,19 @@ import com.otuscoursework.arch.recycler.BaseDelegationAdapter
 import com.otuscoursework.arch.recycler.RecyclerViewItem
 import com.otuscoursework.databinding.FragmentHomeBinding
 import com.otuscoursework.databinding.ViewPopupShowFavouriteBinding
+import com.otuscoursework.di.components.DaggerFragmentHomeComponent
+import com.otuscoursework.di.components.FragmentHomeComponent
 import com.otuscoursework.ui.CartKeeper
 import com.otuscoursework.ui.fragments.dialog.OtusDialogFragment
+import com.otuscoursework.ui.fragments.menuItemDetail.MenuItemDetailFragment
+import com.otuscoursework.ui.main.MainActivity
 import com.otuscoursework.ui.models.ChipItemUiModel
+import com.otuscoursework.ui.models.MenuItemModel
 import com.otuscoursework.ui.models.MenuItemUiModel
 import com.otuscoursework.utils_and_ext.OtusLogger
 import com.otuscoursework.utils_and_ext.setSafeOnClickListener
 import com.otuscoursework.view.badge_button.ButtonType
+import com.otuscoursework.view.size_changer.SizeChanger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -35,22 +41,34 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
     private lateinit var fragmentBinding: FragmentHomeBinding
     override val viewModel: HomeFragmentViewModel by viewModels()
 
+    private val menuItemModelList: MutableList<MenuItemModel> = mutableListOf()
+    private val chipsItemUiModelList: MutableList<ChipItemUiModel> = mutableListOf()
+    private var selectedSizeIndex = SizeChanger.INDEX_CENTER
+
     private val categoryIdChipList: MutableList<Int> = mutableListOf()
     private val chipsAdapter = createChipsAdapter()
     private val menuAdapter = createMenuAdapter()
-
-    private val menuItemUiModelList: MutableList<MenuItemUiModel> = mutableListOf()
-    private val chipsItemUiModelList: MutableList<ChipItemUiModel> = mutableListOf()
 
     private var isFavouriteModeActive = MutableStateFlow(false)
 
     @Inject
     lateinit var cartKeeper: CartKeeper
 
+    lateinit var fragmentComponent: FragmentHomeComponent
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fragmentComponent = DaggerFragmentHomeComponent
+            .factory()
+            .create(MainActivity.INSTANCE.activityComponent)
+    }
+
     override fun initViews() {
         initButtons()
         initRecyclerViews()
         initPopupMenu()
+        initSizeChanger()
     }
 
     override fun initObservers() {
@@ -140,6 +158,21 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
         }
     }
 
+    private fun initSizeChanger() {
+        fragmentBinding.sizeChanger.apply {
+            setOnCheckedChangeListener {
+                changeSelectedSize(it)
+            }
+            setItemNames(
+                listOf(
+                    getString(R.string.sizeLeft),
+                    getString(R.string.sizeCenter),
+                    getString(R.string.sizeRight),
+                )
+            )
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -171,21 +204,40 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
             chipsItemUiModelList.addAll(chipsItemList)
             populateChipsMenu()
 
-            menuItemUiModelList.clear()
-            menuItemUiModelList.addAll(menuItemList)
+            menuItemModelList.clear()
+            menuItemModelList.addAll(menuItemList)
             populateMenuRecyclerView()
         }
     }
 
     private fun showAddTokensDialog() {
         val dialog = OtusDialogFragment.newInstance(OtusDialogFragment.DialogType.ADD_PROMO)
-        dialog.show(activity?.supportFragmentManager!!, "")
+        dialog.show(activity?.supportFragmentManager!!, OtusDialogFragment.DIALOG_TAG)
+    }
+
+    private fun showBottomSheetMenuItemDetail(item: MenuItemUiModel) {
+        val dialog = MenuItemDetailFragment.newInstance(
+            item = menuItemModelList.first { it.id == item.id },
+            index = selectedSizeIndex,
+            changeFavouriteStatus = { changeFavouriteStatus(item) },
+            addItemToCart = {
+                addItemToCart(item, it)
+            },
+            removeItemFromCart = {
+                removeItemFromCart(item, it)
+            })
+        dialog.show(activity?.supportFragmentManager!!, MenuItemDetailFragment.DIALOG_TAG)
+    }
+
+    private fun changeSelectedSize(index: Int) {
+        selectedSizeIndex = index
+        populateMenuRecyclerView()
     }
 
     private fun createChipsAdapter(): BaseDelegationAdapter {
         return BaseDelegationAdapter(
             ChipAdapterDelegate.chipDelegate(
-                ::filterMenuItem
+                filterItems = ::filterMenuItem
             )
         )
     }
@@ -193,34 +245,79 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
     private fun createMenuAdapter(): BaseDelegationAdapter {
         return BaseDelegationAdapter(
             MenuAdapterDelegate.menuDelegate(
-                ::addItemToCart,
-                ::removeItemFromCart,
-                ::changeFavouriteStatus
+                showDetails = ::showBottomSheetMenuItemDetail,
+                addToCart = ::addItemToCart,
+                removeFromCart = ::removeItemFromCart,
+                changeFavouriteStatus = ::changeFavouriteStatus
             )
         )
     }
 
-    private fun addItemToCart(item: MenuItemUiModel) {
+    private fun updateMenuItem(item: MenuItemUiModel) {
+        val index = menuAdapter.items.indexOf(item)
+        menuAdapter.notifyItemChanged(index)
+    }
+
+    private fun addItemToCart(item: MenuItemUiModel, selectedSize: Int? = null) {
         lifecycleScope.launch {
-            item.amountInCart = item.amountInCart + 1
-//TODO item.id при выбранном режиме Избранное не совпадает с позицией
-            menuAdapter.notifyItemChanged(item.id)
-            cartKeeper.addItemToCart(newItem = item.toCartItem())
+            val index = menuItemModelList.indexOfFirst { it.id == item.id }
+            menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] =
+                menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] + 1
+
+            if (menuItemModelList[index].sizes[selectedSize ?: selectedSizeIndex] == item.size) {
+                item.amountInCart = item.amountInCart + 1
+                updateMenuItem(item)
+            }
+
+            menuItemModelList[index].let {
+                cartKeeper.addItemToCart(
+                    item = MenuItemUiModel(
+                        id = it.id,
+                        name = it.name,
+                        categoryId = it.categoryId,
+                        picture = it.picture,
+                        description = it.description,
+                        isInFavourite = it.isInFavourite,
+                        size = it.sizes[selectedSize ?: selectedSizeIndex],
+                        amountInCart = it.amountInCart[selectedSize ?: selectedSizeIndex]
+                    ).toCartItem()
+                )
+            }
         }
     }
 
-    private fun removeItemFromCart(item: MenuItemUiModel) {
+    private fun removeItemFromCart(item: MenuItemUiModel, selectedSize: Int? = null) {
         lifecycleScope.launch {
-            item.amountInCart = item.amountInCart - 1
-//TODO item.id при выбранном режиме Избранное не совпадает с позицией
-            menuAdapter.notifyItemChanged(item.id)
-            cartKeeper.removeItemFromCart(item = item.toCartItem())
+            val index = menuItemModelList.indexOfFirst { it.id == item.id }
+            menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] =
+                menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] - 1
+
+            if (menuItemModelList[index].sizes[selectedSize ?: selectedSizeIndex] == item.size) {
+                item.amountInCart = item.amountInCart - 1
+                updateMenuItem(item)
+            }
+
+            menuItemModelList[index].let {
+                cartKeeper.removeItemFromCart(
+                    item = MenuItemUiModel(
+                        id = it.id,
+                        name = it.name,
+                        categoryId = it.categoryId,
+                        picture = it.picture,
+                        description = it.description,
+                        isInFavourite = it.isInFavourite,
+                        size = it.sizes[selectedSize ?: selectedSizeIndex],
+                        amountInCart = it.amountInCart[selectedSize ?: selectedSizeIndex]
+                    ).toCartItem()
+                )
+            }
         }
     }
 
     private fun changeFavouriteStatus(item: MenuItemUiModel) {
-        menuAdapter.notifyItemChanged(item.id)
-        populateMenuRecyclerView()
+        val index = menuItemModelList.indexOfFirst { it.id == item.id }
+        item.isInFavourite = menuItemModelList[index].isInFavourite
+        if (isFavouriteModeActive.value) populateMenuRecyclerView() else updateMenuItem(item)
     }
 
     private fun onModeChanged() {
@@ -256,20 +353,35 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
 
     private fun populateMenuRecyclerView() {
         menuAdapter.apply {
-            items = if (isFavouriteModeActive.value) {
+            items = (if (isFavouriteModeActive.value) {
                 if (categoryIdChipList.isNotEmpty()) {
-                    menuItemUiModelList.filter { it.categoryId in categoryIdChipList && it.isInFavourite }
+                    menuItemModelList.filter { it.categoryId in categoryIdChipList && it.isInFavourite }
                 } else {
-                    menuItemUiModelList.filter { it.isInFavourite }
+                    menuItemModelList.filter { it.isInFavourite }
                 }
             } else {
                 if (categoryIdChipList.isNotEmpty()) {
-                    menuItemUiModelList.filter { it.categoryId in categoryIdChipList }
+                    menuItemModelList.filter { it.categoryId in categoryIdChipList }
                 } else {
-                    menuItemUiModelList
+                    menuItemModelList
                 }
-            }
+            }).toUi()
             notifyDataSetChanged()
+        }
+    }
+
+    private fun List<MenuItemModel>.toUi(): List<MenuItemUiModel> {
+        return this.map {
+            MenuItemUiModel(
+                id = it.id,
+                name = it.name,
+                categoryId = it.categoryId,
+                picture = it.picture,
+                description = it.description,
+                isInFavourite = it.isInFavourite,
+                size = it.sizes[selectedSizeIndex],
+                amountInCart = it.amountInCart[selectedSizeIndex]
+            )
         }
     }
 }
