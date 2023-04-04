@@ -2,10 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/marginXXXSmall"
-    android:background="@drawable/bg_expandable_button"
-    android:elevation="@dimen/elevation">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/minusContainer"
@@ -18,9 +15,9 @@
 
         <ImageView
             android:id="@+id/minusButton"
-            android:layout_width="@dimen/size_x_large"
-            android:layout_height="@dimen/size_x_large"
-            android:padding="16dp"
+            android:layout_width="@dimen/main_size_48"
+            android:layout_height="@dimen/main_size_48"
+            android:padding="@dimen/margin_big"
             android:src="@drawable/icon_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,13 +26,12 @@
 
         <TextView
             android:id="@+id/counterText"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            style="@style/SmallText"
+            android:layout_width="@dimen/main_size_48"
+            android:layout_height="@dimen/main_size_48"
             android:background="@drawable/bg_round_button"
             android:backgroundTint="@color/white"
-            android:gravity="center"
             android:text="1"
-            android:textSize="@dimen/textXSmallSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,12 +41,9 @@
 
     <ImageView
         android:id="@+id/plusButton"
-        android:layout_width="@dimen/size_x_large"
-        android:layout_height="@dimen/size_x_large"
-        android:background="@drawable/bg_round_button"
-        android:backgroundTint="@color/gold_200"
-        android:elevation="@dimen/elevation"
-        android:padding="16dp"
+        android:layout_width="@dimen/main_size_48"
+        android:layout_height="@dimen/main_size_48"
+        android:padding="@dimen/margin_big"
         android:src="@drawable/icon_plus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

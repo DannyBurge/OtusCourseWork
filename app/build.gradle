@@ -93,4 +93,11 @@ dependencies {
 
     // AdapterDelegates https://github.com/sockeqwe/AdapterDelegates
     implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
+
+    // Security https://developer.android.com/jetpack/androidx/releases/security
+    implementation "androidx.security:security-crypto:1.1.0-alpha05"
+
+    // Picasso https://github.com/square/picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
 }

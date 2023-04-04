@@ -6,7 +6,9 @@ import java.util.*
 data class OrderItemUiModel(
     override val id: Int,
     val isActive: Boolean,
-    val date: Date,
-    val orderCheckItemList: List<CartCheckItemUiModel>,
+    var isOpen: Boolean,
+    val date: String,
+    val orderCheckItemList: List<CartItemUiModel>,
+    val tokensAdded: Int,
     val totalPrice: Int
 ) : RecyclerViewItem

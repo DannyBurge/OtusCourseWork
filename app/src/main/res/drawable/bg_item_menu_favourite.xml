@@ -6,6 +6,6 @@
     android:viewportHeight="100">
     <solid android:color="@color/coral_200" />
     <corners
-        android:topRightRadius="@dimen/cardCornerRadius"
-        android:bottomLeftRadius="@dimen/cardCornerRadius"/>
+        android:topRightRadius="@dimen/corner_radius"
+        android:bottomLeftRadius="@dimen/corner_radius"/>
 </shape>

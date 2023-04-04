@@ -6,7 +6,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/main_size_150"
         android:background="@drawable/bg_top_panel"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -15,62 +15,54 @@
         style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big"
+        android:includeFontPadding="false"
         android:text="@string/mainTitle"
-        app:layout_constraintBottom_toTopOf="@id/subTitleText"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@id/subTitleText"
-        app:layout_constraintStart_toStartOf="@id/subTitleText" />
+        app:layout_constraintStart_toStartOf="@id/subTitleText"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/subTitleText"
         style="@style/SubTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marginSmall"
-        android:layout_marginBottom="@dimen/marginXSmall"
+        android:layout_marginStart="@dimen/margin_big"
+        android:includeFontPadding="false"
         android:text="@string/mainSubTitle"
-        app:layout_constraintBottom_toTopOf="@id/balancePanel"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <com.otuscoursework.view.badge_button.ButtonWithBadge
-        android:id="@+id/toCartButton"
+        android:id="@+id/toNotificationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginXSmall"
-        android:layout_marginEnd="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.otuscoursework.view.badge_button.ButtonWithBadge
-        android:id="@+id/toOrdersButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginXSmall"
-        android:layout_marginEnd="@dimen/marginXSmall"
-        app:layout_constraintEnd_toStartOf="@id/toCartButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/balancePanel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marginXSmall"
-        android:layout_marginTop="@dimen/marginXXXLarge"
-        android:layout_marginEnd="@dimen/marginXSmall"
+        android:layout_margin="@dimen/margin_big"
         android:background="@drawable/bg_card_panel"
         android:elevation="@dimen/elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/subTitleText">
 
         <TextView
             android:id="@+id/balancePanelTitle"
+            style="@style/SmallText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/marginXSmall"
-            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/margin_big"
             android:text="@string/balancePanelTitle"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textXSmallSize"
+
             app:layout_constraintBottom_toTopOf="@id/balancePanelBalance"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -78,13 +70,11 @@
 
         <TextView
             android:id="@+id/balancePanelBalance"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/marginXSmall"
-            android:includeFontPadding="false"
-            android:text="9999"
-            android:textColor="@color/black"
-            android:textSize="@dimen/textXLargeSize"
+            android:layout_marginStart="@dimen/margin_big"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/balancePanelTitle" />
@@ -93,78 +83,89 @@
             android:id="@+id/toAddTokensButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginXSmall"
-            android:layout_marginEnd="@dimen/marginXSmall"
-            app:layout_constraintEnd_toStartOf="@id/toSaleButton"
+            android:layout_marginTop="@dimen/margin_big"
+            android:layout_marginEnd="@dimen/margin_big"
+            app:layout_constraintEnd_toStartOf="@id/toOrdersButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/toAddTokensButtonName"
+            style="@style/SmallText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/marginXSmall"
+            android:layout_marginBottom="@dimen/margin_big"
             android:text="@string/addTokensButtonTitle"
-            android:textSize="@dimen/textXXXSmallSize"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/toAddTokensButton"
             app:layout_constraintStart_toStartOf="@id/toAddTokensButton"
             app:layout_constraintTop_toBottomOf="@id/toAddTokensButton" />
 
         <com.otuscoursework.view.badge_button.ButtonWithBadge
-            android:id="@+id/toSaleButton"
+            android:id="@+id/toOrdersButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginXSmall"
-            android:layout_marginEnd="@dimen/marginXSmall"
-            app:layout_constraintEnd_toStartOf="@id/toNotificationButton"
+            android:layout_marginTop="@dimen/margin_big"
+            android:layout_marginEnd="@dimen/margin_big"
+            app:layout_constraintEnd_toStartOf="@id/toCartButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/toSaleButtonName"
+            style="@style/SmallText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/marginXSmall"
-            android:text="@string/saleButtonTitle"
-            android:textSize="@dimen/textXXXSmallSize"
+            android:layout_marginBottom="@dimen/margin_big"
+            android:text="@string/ordersButtonTitle"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/toSaleButton"
-            app:layout_constraintStart_toStartOf="@id/toSaleButton"
-            app:layout_constraintTop_toBottomOf="@id/toSaleButton" />
+            app:layout_constraintEnd_toEndOf="@id/toOrdersButton"
+            app:layout_constraintStart_toStartOf="@id/toOrdersButton"
+            app:layout_constraintTop_toBottomOf="@id/toOrdersButton" />
 
         <com.otuscoursework.view.badge_button.ButtonWithBadge
-            android:id="@+id/toNotificationButton"
+            android:id="@+id/toCartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginXSmall"
-            android:layout_marginEnd="@dimen/marginSmall"
+            android:layout_marginTop="@dimen/margin_big"
+            android:layout_marginEnd="@dimen/margin_big"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/toNotificationButtonName"
+            style="@style/SmallText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/marginXSmall"
-            android:text="@string/notificationsButtonTitle"
-            android:textSize="@dimen/textXXXSmallSize"
+            android:layout_marginBottom="@dimen/margin_big"
+            android:text="@string/cartButtonTitle"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/toNotificationButton"
-            app:layout_constraintStart_toStartOf="@id/toNotificationButton"
-            app:layout_constraintTop_toBottomOf="@id/toNotificationButton" />
+            app:layout_constraintEnd_toEndOf="@id/toCartButton"
+            app:layout_constraintStart_toStartOf="@id/toCartButton"
+            app:layout_constraintTop_toBottomOf="@id/toCartButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/arrowDown"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:background="@drawable/icon_down"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintBottom_toBottomOf="@+id/showOptionsButton"
+        app:layout_constraintStart_toEndOf="@+id/showOptionsButton"
+        app:layout_constraintTop_toTopOf="@+id/showOptionsButton" />
+
     <TextView
         android:id="@+id/showOptionsButton"
-        style="@style/ShowOptions"
+        style="@style/SmallText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="@dimen/marginMedium"
-        android:layout_marginTop="@dimen/marginMedium"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginStart="@dimen/margin_big"
 
-        android:text="Показать всё"
-        android:textSize="@dimen/textXSmallSize"
+        android:text="@string/showOptionsMode"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/balancePanel" />
@@ -174,39 +175,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="@dimen/marginXSmall"
-        android:layout_marginTop="@dimen/marginXSmall"
-        android:layout_marginEnd="@dimen/marginXSmall"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/showOptionsButton" />
-
-    <com.otuscoursework.view.size_changer.SizeChanger
-        android:id="@+id/sizeChanger"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="@dimen/marginXSmall"
-        android:layout_marginTop="@dimen/marginXSmall"
-        android:layout_marginEnd="@dimen/marginXSmall"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipsRecyclerView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menuRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
-        android:layout_marginStart="@dimen/marginXSmall"
-        android:layout_marginTop="@dimen/marginXSmall"
-        android:layout_marginEnd="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/margin_medium"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sizeChanger" />
+        app:layout_constraintTop_toBottomOf="@id/chipsRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,9 @@
 package com.otuscoursework.di.components
 
+import android.content.Context
 import com.otuscoursework.navigation.CiceroneAppNavigator
 import com.otuscoursework.ui.CartKeeper
+import com.otuscoursework.ui.UserDataKeeper
 import com.otuscoursework.ui.fragments.cart.CartFragment
 import com.otuscoursework.ui.fragments.home.HomeFragment
 import com.otuscoursework.ui.fragments.menuItemDetail.MenuItemDetailFragment
@@ -23,7 +25,7 @@ interface FragmentCartComponent {
 
     fun provideAppNavigator() : CiceroneAppNavigator
 
-    fun provideCartKeeper(): CartKeeper
+    fun provideContext() : Context
 
     fun inject(fragment: CartFragment)
 }

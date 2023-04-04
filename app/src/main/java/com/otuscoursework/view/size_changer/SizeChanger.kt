@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import com.otuscoursework.databinding.ViewSizeChangerBinding
+import com.otuscoursework.utils_and_ext.enable
 
 class SizeChanger @JvmOverloads constructor(
     context: Context,
@@ -17,9 +19,28 @@ class SizeChanger @JvmOverloads constructor(
 
     fun setItemNames(names: List<String>) {
         binding.apply {
-            radioLeft.text = names[INDEX_LEFT]
-            radioCenter.text = names[INDEX_CENTER]
-            radioRight.text = names[INDEX_RIGHT]
+            when (names.size) {
+                2 -> {
+                    radioLeft.text = names[INDEX_LEFT]
+                    radioCenter.isVisible = false
+                    radioRight.text = names[INDEX_CENTER]
+                }
+                3 -> {
+                    radioLeft.text = names[INDEX_LEFT]
+                    radioCenter.text = names[INDEX_CENTER]
+                    radioRight.text = names[INDEX_RIGHT]
+                }
+            }
+        }
+    }
+
+    fun blockItem(index: Int, isEnabled: Boolean) {
+        binding.apply {
+            when (index) {
+                INDEX_LEFT -> radioLeft.enable(isEnabled)
+                INDEX_CENTER -> radioCenter.enable(isEnabled)
+                INDEX_RIGHT -> radioRight.enable(isEnabled)
+            }
         }
     }
 

@@ -1,13 +1,24 @@
 package com.otuscoursework.ui.fragments.home
 
 import androidx.lifecycle.viewModelScope
+import com.otuscoursework.R
 import com.otuscoursework.arch.BaseViewModel
 import com.otuscoursework.network.NetworkRepository
-import com.otuscoursework.network.models.*
-import com.otuscoursework.ui.models.ChipItemUiModel
-import com.otuscoursework.ui.models.MenuItemModel
+import com.otuscoursework.network.models.BalanceHistoryItem
+import com.otuscoursework.network.models.CategoryItem
+import com.otuscoursework.network.models.MenuItem
+import com.otuscoursework.ui.CartKeeper
+import com.otuscoursework.ui.UserDataKeeper
+import com.otuscoursework.ui.models.*
+import com.otuscoursework.utils_and_ext.OtusLogger
+import com.otuscoursework.utils_and_ext.toFullIsoDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -16,153 +27,197 @@ import javax.inject.Inject
 class HomeFragmentViewModel @Inject constructor(
     val networkRepository: NetworkRepository
 ) : BaseViewModel<HomeFragmentState>() {
+    @Inject
+    lateinit var cartKeeper: CartKeeper
+
+    @Inject
+    lateinit var userDataKeeper: UserDataKeeper
+
+    val selectedCategories: MutableList<Int> = mutableListOf()
+
+    private val _cartSize = MutableStateFlow(0)
+    val cartSize: StateFlow<Int> = _cartSize
+
+    private val _isFavouriteModeActive = MutableSharedFlow<Boolean>()
+    val isFavouriteModeActive: SharedFlow<Boolean> = _isFavouriteModeActive
 
     override var viewModelState = HomeFragmentState()
 
+    private var balanceRaw: List<BalanceHistoryItem>? = null
+    private var chipsRaw: List<CategoryItem>? = null
+    private var menuRaw: List<MenuItem>? = null
+
     fun onOpen() {
-        viewModelScope.launch {
-            viewModelState.copy(isLoading = true).render()
+        viewModelScope.launch(Dispatchers.IO) {
+            _isFavouriteModeActive.emit(getFavouriteModeStatus())
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            cartKeeper.cartFlow.collect { hashmap ->
+                _cartSize.emit(hashmap.values.sumOf { it.amount })
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            viewModelState = viewModelState.copy(isLoading = true).apply { render() }
 
             val balanceCall = async { networkRepository.getUserBalanceHistory(true) }
             val chipsCall = async { networkRepository.getCategories() }
             val menuCall = async { networkRepository.getMenu() }
 
-            val balance = balanceCall.await() ?: listOf(
-                BalanceHistoryItem(
-                    id = 0,
-                    orderId = 111,
-                    date = Date().toString(),
-                    amountAdded = 20,
-                    amount = 1234
-                )
-            )
-            val chips = chipsCall.await() ?: listOf(
-                CategoryItem(id = 0, name = "Пицца"),
-                CategoryItem(id = 1, name = "Закуски"),
-                CategoryItem(id = 2, name = "Десерты"),
-                CategoryItem(id = 3, name = "Соусы"),
-                CategoryItem(id = 4, name = "Напитки"),
-            )
-            val menu = menuCall.await() ?: listOf(
-                MenuItem(
-                    id = 0,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 1",
-                    description = "Это пицца 1",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-                MenuItem(
-                    id = 1,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 2",
-                    description = "Это пицца 2",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-                MenuItem(
-                    id = 2,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 3",
-                    description = "Это пицца 3",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-                MenuItem(
-                    id = 3,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 4",
-                    description = "Это пицца 4",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-                MenuItem(
-                    id = 4,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 5",
-                    description = "Это пицца 5",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-                MenuItem(
-                    id = 5,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 6",
-                    description = "Это пицца 6",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-                MenuItem(
-                    id = 6,
-                    categoryId = 0,
-                    picture = "",
-                    name = "Пицца 7",
-                    description = "Это пицца 7",
-                    sizes = listOf(
-                        MenuItemSize(sizeId = 0, 100, "10 см", MenuItemFoodValue("100", "101", "102", "103", "104")),
-                        MenuItemSize(sizeId = 1, 200, "20 см", MenuItemFoodValue("200", "201", "202", "203", "204")),
-                        MenuItemSize(sizeId = 2, 300, "30 см", MenuItemFoodValue("300", "301", "302", "303", "304"))
-                    ),
-                    foodValue = MenuItemFoodValue("100", "101", "102", "103", "104")
-                ),
-            )
+            balanceRaw = balanceCall.await()
+            chipsRaw = chipsCall.await()
+            menuRaw = menuCall.await()
 
-            if (balance == null || chips == null || menu == null) {
-                viewModelState.copy(isLoading = false, errorMessage = "ERROR").render()
+            if (balanceRaw == null || chipsRaw == null || menuRaw == null) {
+                viewModelState = viewModelState.copy(
+                    isLoading = false,
+                    errorMessage = getStringById(R.string.server_error)
+                ).apply { render() }
                 return@launch
             }
-            viewModelState.copy(
+            viewModelState = viewModelState.copy(
                 isLoading = false,
-                tokenAmount = balance.last().amount,
-                chipsItemList = chips.toUiChips(),
-                menuItemList = menu.toUiMenu(),
-            ).render()
+                tokenAmount = balanceRaw!!.last().amount!!,
+                chipsItemList = chipsRaw!!.map { it.toUi() },
+                menuItemList = menuRaw!!.map { it.toUi() },
+            ).apply { render() }
         }
     }
 
-    private fun List<CategoryItem>.toUiChips(): List<ChipItemUiModel> {
-        return this.map {
-            ChipItemUiModel(
+    fun saveFavouriteModeStatus(isActive: Boolean) {
+        userDataKeeper.isFavouriteModeActive = isActive
+        viewModelScope.launch(Dispatchers.IO) {
+            _isFavouriteModeActive.emit(isActive)
+        }
+    }
+
+    fun getFavouriteModeStatus(): Boolean {
+        return userDataKeeper.isFavouriteModeActive
+    }
+
+    fun saveTokensAmount(amount: Int) {
+        userDataKeeper.tokensAmount = amount
+    }
+
+    fun getMenuItemDetailModel(id: Int): MenuItemDetailModel? {
+        val rawItem = menuRaw?.firstOrNull { it.groupId == id } ?: return null
+
+        val subItems = rawItem.subItems.map {
+            MenuSubItemModel(
                 id = it.id,
-                name = it.name,
-                isSelected = false
+                price = it.price,
+                displayName = it.displayName,
+                weight = it.weight,
             )
         }
+        val amountInCart = rawItem.subItems.map {
+            cartKeeper.getSnapshot()[it.id]?.amount ?: 0
+        }
+
+        return MenuItemDetailModel(
+            groupId = rawItem.groupId,
+            name = rawItem.name,
+            categoryId = rawItem.categoryId,
+            picture = rawItem.picture,
+            description = rawItem.description,
+            isInFavourite = userDataKeeper.userFavouriteItemIds?.contains(rawItem.groupId) == true,
+            subItems = subItems,
+            amountInCart = amountInCart.toMutableList(),
+            foodValue = MenuItemFoodValueModel(
+                ccal = rawItem.foodValue.ccal,
+                proteins = rawItem.foodValue.proteins,
+                fats = rawItem.foodValue.fats,
+                carbohydrates = rawItem.foodValue.carbohydrates
+            )
+        )
     }
 
-    private fun List<MenuItem>.toUiMenu(): List<MenuItemModel> {
-        return this.map { menuItem ->
-            MenuItemModel.from(menuItem)
+    fun changeItemFavouriteStatus(item: MenuItemUiModel) {
+        val favList = (userDataKeeper.userFavouriteItemIds)?.toMutableList() ?: mutableListOf()
+        if (item.isInFavourite) {
+            favList.add(item.id)
+        } else {
+            favList.remove(item.id)
         }
+        userDataKeeper.userFavouriteItemIds = favList
+        if (favouriteListIsEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                _isFavouriteModeActive.emit(false)
+            }
+        }
+    }
+
+    fun setPromoCode(code: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            viewModelState = viewModelState.copy(
+                isLoading = true,
+            ).apply { render() }
+
+            val validateCode = networkRepository.validateCode(code = code)
+
+            if (validateCode == null) {
+                viewModelState = viewModelState.copy(
+                    isLoading = false,
+                    errorMessage = getStringById(R.string.server_error)
+                ).apply { render() }
+                return@launch
+            }
+
+            if (validateCode.validated) {
+                val balance = networkRepository.addBalance(
+                    BalanceHistoryItem(
+                        date = Date().toFullIsoDate(),
+                        amountAdded = validateCode.amountAdded,
+                    )
+                )
+                if (balance == null) {
+                    viewModelState = viewModelState.copy(
+                        isLoading = false,
+                        errorMessage = getStringById(R.string.server_error)
+                    ).apply { render() }
+                    return@launch
+                }
+
+                viewModelState = viewModelState.copy(
+                    isLoading = false,
+                    tokenAmount = balance.amount!!
+                ).apply { render() }
+            } else {
+                viewModelState = viewModelState.copy(
+                    isLoading = false,
+                    errorMessage = getStringById(R.string.promo_code_not_valid)
+                ).apply { render() }
+                return@launch
+            }
+        }
+    }
+
+    private fun favouriteListIsEmpty(): Boolean {
+        val isEmpty = userDataKeeper.userFavouriteItemIds.isNullOrEmpty()
+        if (isEmpty) saveFavouriteModeStatus(isActive = false)
+        return isEmpty
+    }
+
+    private fun CategoryItem.toUi(): ChipItemUiModel {
+        return ChipItemUiModel(
+            id = this.id,
+            name = this.name,
+            isSelected = false
+        )
+    }
+
+    private fun MenuItem.toUi(): MenuItemUiModel {
+        return MenuItemUiModel(
+            id = this.groupId,
+            subItemIds = this.subItems.map { it.id },
+            name = this.name,
+            categoryId = this.categoryId,
+            picture = this.picture,
+            description = this.description,
+            isInFavourite = userDataKeeper.userFavouriteItemIds?.contains(this.groupId) == true,
+            price = this.subItems.first().price
+        )
     }
 }

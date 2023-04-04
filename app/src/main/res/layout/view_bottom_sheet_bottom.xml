@@ -9,17 +9,22 @@
         android:id="@+id/sizeChanger"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginXSmall"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_big"
+        android:background="@drawable/bg_card_panel"
+        android:elevation="@dimen/elevation"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.otuscoursework.view.expandable_button.ExpandableButton
         android:id="@+id/addRemoveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginXSmall"
+        android:layout_margin="@dimen/margin_big"
+        android:background="@drawable/bg_expandable_button"
+        android:elevation="@dimen/elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toCartButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,18 +32,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/toCartButton"
+        style="@style/ButtonStyleRed"
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_x_large"
+        android:layout_height="@dimen/main_size_48"
 
-        android:layout_marginEnd="@dimen/marginXSmall"
-        android:background="@drawable/bg_expandable_button"
-        android:backgroundTint="@color/coral_200"
+        android:layout_marginEnd="@dimen/margin_big"
         android:elevation="@dimen/elevation"
-        android:includeFontPadding="false"
-        android:text="Перейти в корзину"
+        android:text="@string/toCartButtonTitle"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textSmallSize"
 
         app:layout_constraintBottom_toBottomOf="@+id/addRemoveButton"
         app:layout_constraintEnd_toEndOf="parent"

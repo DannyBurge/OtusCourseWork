@@ -2,16 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clipToPadding="false">
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_x_large"
-
-        android:layout_margin="@dimen/marginXXXSmall"
-        android:background="@drawable/bg_card_panel"
+        android:layout_height="@dimen/main_size_48"
         android:elevation="@dimen/elevation"
+
         android:orientation="horizontal"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,6 +20,7 @@
 
         <RadioButton
             android:id="@+id/radioLeft"
+            style="@style/MediumText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,45 +28,41 @@
             android:button="@android:color/transparent"
             android:checked="false"
             android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="Мал."
-            android:textSize="@dimen/textSmallSize" />
+            android:text="Мал." />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginVertical="@dimen/marginXXXSmall" />
+            android:layout_marginVertical="@dimen/margin_small" />
 
         <RadioButton
             android:id="@+id/radioCenter"
+            style="@style/MediumText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/selector_radio_button_center"
             android:button="@android:color/transparent"
-            android:checked="true"
+            android:checked="false"
             android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="Сред."
-            android:textSize="@dimen/textSmallSize" />
+            android:text="Сред." />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginVertical="@dimen/marginXXXSmall" />
+            android:layout_marginVertical="@dimen/margin_small" />
 
         <RadioButton
             android:id="@+id/radioRight"
+            style="@style/MediumText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/selector_radio_button_right"
             android:button="@android:color/transparent"
-            android:checked="false"
+            android:checked="true"
             android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="Бол."
-            android:textSize="@dimen/textSmallSize" />
+            android:text="Бол." />
 
     </RadioGroup>
 

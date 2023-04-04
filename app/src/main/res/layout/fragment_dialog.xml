@@ -2,62 +2,86 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="328dp"
-    android:layout_height="175dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog">
 
     <TextView
         android:id="@+id/dialogTitle"
+        style="@style/BigText"
         android:layout_width="0dp"
-        android:background="@drawable/bg_dialog_title"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog_title"
         android:gravity="center"
-        android:paddingHorizontal="@dimen/marginSmall"
-        android:paddingVertical="@dimen/marginXXSmall"
+        android:paddingVertical="@dimen/margin_medium"
         android:text="@string/dialogAddPromoTitle"
         android:textColor="@color/white"
-        android:textSize="@dimen/textMediumSize"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dialogBody"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/dialogBodyName"
+        style="@style/MediumText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginXSmall"
+        android:layout_margin="@dimen/margin_big"
+        android:autofillHints=""
+        android:background="@drawable/bg_card_panel"
+        android:elevation="@dimen/elevation"
         android:gravity="center"
-        android:text="@string/dialogAddPromoTitle"
-        app:layout_constraintBottom_toTopOf="@+id/cancelButton"
+        android:hint="@string/dialogAddPromoTitle"
+
+        android:inputType="textAutoComplete"
+
+        android:padding="@dimen/margin_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialogTitle" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cancelButton"
+
+    <EditText
+        android:id="@+id/dialogBodyValue"
+        style="@style/MediumText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marginXSmall"
+        android:layout_margin="@dimen/margin_big"
+        android:autofillHints=""
         android:background="@drawable/bg_card_panel"
-        android:textSize="@dimen/textXXSmallSize"
-        android:backgroundTint="@color/gold_200"
+        android:elevation="@dimen/elevation"
+        android:gravity="center"
+        android:hint="@string/dialogAddPromoTitle"
+
+        android:inputType="textAutoComplete"
+
+        android:padding="@dimen/margin_big"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialogBodyName" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancelButton"
+        style="@style/ButtonStyleGold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_big"
+        android:layout_marginStart="@dimen/margin_big"
         android:text="@string/dialogCancelButtonTitle"
-        app:layout_constraintBottom_toBottomOf="@+id/applyButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/applyButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogBodyValue" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/applyButton"
+        style="@style/ButtonStyleRed"
         android:layout_width="0dp"
-        android:textSize="@dimen/textXXSmallSize"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginXSmall"
-        android:background="@drawable/bg_card_panel"
-        android:backgroundTint="@color/coral_200"
-        android:paddingHorizontal="@dimen/marginSmall"
+        android:layout_margin="@dimen/margin_big"
         android:text="@string/dialogOkButtonTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/cancelButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cancelButton" />
+        app:layout_constraintStart_toEndOf="@+id/cancelButton"
+        app:layout_constraintTop_toTopOf="@+id/cancelButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

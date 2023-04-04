@@ -5,6 +5,7 @@ import java.util.*
 
 data class NotificationItemUiModel(
     override val id: Int,
-    val date: Date,
-    val orderId: Int
+    val date: String,
+    val amountAdded: Int,
+    val orderId: Int,
     ) : RecyclerViewItem

@@ -1,86 +1,76 @@
 package com.otuscoursework.ui.fragments.home
 
+import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.PopupWindow
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.otuscoursework.R
 import com.otuscoursework.arch.BaseFragment
 import com.otuscoursework.arch.BaseState
 import com.otuscoursework.arch.recycler.BaseDelegationAdapter
 import com.otuscoursework.arch.recycler.RecyclerViewItem
 import com.otuscoursework.databinding.FragmentHomeBinding
-import com.otuscoursework.databinding.ViewPopupShowFavouriteBinding
 import com.otuscoursework.di.components.DaggerFragmentHomeComponent
 import com.otuscoursework.di.components.FragmentHomeComponent
-import com.otuscoursework.ui.CartKeeper
 import com.otuscoursework.ui.fragments.dialog.OtusDialogFragment
 import com.otuscoursework.ui.fragments.menuItemDetail.MenuItemDetailFragment
 import com.otuscoursework.ui.main.MainActivity
-import com.otuscoursework.ui.models.ChipItemUiModel
-import com.otuscoursework.ui.models.MenuItemModel
-import com.otuscoursework.ui.models.MenuItemUiModel
+import com.otuscoursework.ui.models.*
 import com.otuscoursework.utils_and_ext.OtusLogger
 import com.otuscoursework.utils_and_ext.setSafeOnClickListener
 import com.otuscoursework.view.badge_button.ButtonType
-import com.otuscoursework.view.size_changer.SizeChanger
+import com.otuscoursework.view.popup.PopupMenuWithList
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
+class HomeFragment : BaseFragment<HomeFragmentViewModel>(),
+    PopupMenuWithList.OnPopupMenuItemClickListener {
 
-    private lateinit var fragmentBinding: FragmentHomeBinding
+    override lateinit var fragmentBinding: FragmentHomeBinding
+
     override val viewModel: HomeFragmentViewModel by viewModels()
 
-    private val menuItemModelList: MutableList<MenuItemModel> = mutableListOf()
+    private val menuItemUiModelList: MutableList<MenuItemUiModel> = mutableListOf()
     private val chipsItemUiModelList: MutableList<ChipItemUiModel> = mutableListOf()
-    private var selectedSizeIndex = SizeChanger.INDEX_CENTER
 
-    private val categoryIdChipList: MutableList<Int> = mutableListOf()
     private val chipsAdapter = createChipsAdapter()
     private val menuAdapter = createMenuAdapter()
 
-    private var isFavouriteModeActive = MutableStateFlow(false)
-
-    @Inject
-    lateinit var cartKeeper: CartKeeper
+    private lateinit var popupMenu: PopupMenuWithList
 
     lateinit var fragmentComponent: FragmentHomeComponent
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        fragmentComponent = DaggerFragmentHomeComponent
-            .factory()
-            .create(MainActivity.INSTANCE.activityComponent)
-    }
 
     override fun initViews() {
         initButtons()
         initRecyclerViews()
         initPopupMenu()
-        initSizeChanger()
+    }
+
+    override fun initFragmentComponent() {
+        fragmentComponent = DaggerFragmentHomeComponent
+            .factory()
+            .create(MainActivity.INSTANCE.activityComponent)
+        fragmentComponent.inject(this)
     }
 
     override fun initObservers() {
         super.initObservers()
         lifecycleScope.launch {
-            cartKeeper.getFlow().collect {
-                fragmentBinding.toCartButton.updateBadge(it.size)
+            viewModel.cartSize.collect {
+                fragmentBinding.toCartButton.updateBadge(it)
             }
         }
 
         lifecycleScope.launch {
-            isFavouriteModeActive.collect {
+            viewModel.isFavouriteModeActive.collect {
                 onModeChanged()
             }
         }
@@ -103,11 +93,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
                 setSafeOnClickListener { ciceroneAppNavigator.toNotificationScreen() }
             }
 
-            toSaleButton.apply {
-                setButtonType(ButtonType.SALE)
-                setSafeOnClickListener { ciceroneAppNavigator.toSaleScreen() }
-            }
-
             toAddTokensButton.apply {
                 setButtonType(ButtonType.ADD_TOKENS)
                 setSafeOnClickListener { showAddTokensDialog() }
@@ -123,69 +108,88 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
                 linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                 layoutManager = linearLayoutManager
             }
+
             menuRecyclerView.apply {
+                val screenWidth = resources.displayMetrics.widthPixels
+                val itemMinWidth = resources.getDimensionPixelSize(R.dimen.main_size_150)
+                val sizeMargin = resources.getDimensionPixelSize(R.dimen.margin_big)
+                val sizeMarginMedium = resources.getDimensionPixelSize(R.dimen.margin_medium)
+                val recyclerViewWidth = screenWidth - sizeMargin * 2
+                val columnNumber = recyclerViewWidth / itemMinWidth
+
                 adapter = menuAdapter
-                layoutManager = GridLayoutManager(requireContext(), 2)
+                layoutManager = GridLayoutManager(requireContext(), columnNumber)
+                addItemDecoration(object : RecyclerView.ItemDecoration() {
+                    val lastRowItemNumber = if (menuAdapter.items.size % columnNumber == 0) {
+                        columnNumber
+                    } else {
+                        menuAdapter.items.size % columnNumber
+                    }
+
+                    override fun getItemOffsets(
+                        outRect: Rect,
+                        view: View,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        val position = parent.getChildAdapterPosition(view) // item position
+                        val column = position % columnNumber // item column
+
+                        outRect.left = sizeMargin - column * sizeMargin / columnNumber
+                        outRect.right = (column + 1) * sizeMargin / columnNumber
+
+                        if (position < columnNumber) {
+                            outRect.top = sizeMarginMedium
+                        } else {
+                            outRect.top = sizeMargin
+                        }
+
+                        if (position > parent.adapter!!.itemCount - lastRowItemNumber - 1) {
+                            outRect.bottom = sizeMargin
+                        }
+                    }
+                })
             }
         }
     }
 
     private fun initPopupMenu() {
-        val popupBinding = ViewPopupShowFavouriteBinding.inflate(
-            LayoutInflater.from(context), null, false
-        )
-        val bodyWindow: PopupWindow = PopupWindow(
-            popupBinding.root,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            isFocusable = true
-        }
+        setCorrectModeName()
 
-        fragmentBinding.showOptionsButton.setSafeOnClickListener {
-            bodyWindow.showAsDropDown(fragmentBinding.showOptionsButton, 0, 0);
-        }
-
-        popupBinding.apply {
-            showOptionsShowAllOption.setSafeOnClickListener {
-                isFavouriteModeActive.value = false
-                bodyWindow.dismiss()
-            }
-            showOptionsShowFavouriteOption.setSafeOnClickListener {
-                isFavouriteModeActive.value = true
-                bodyWindow.dismiss()
-            }
-        }
-    }
-
-    private fun initSizeChanger() {
-        fragmentBinding.sizeChanger.apply {
-            setOnCheckedChangeListener {
-                changeSelectedSize(it)
-            }
-            setItemNames(
-                listOf(
-                    getString(R.string.sizeLeft),
-                    getString(R.string.sizeCenter),
-                    getString(R.string.sizeRight),
-                )
+        val menuHeader = getString(R.string.popupMenuTitle)
+        val menuItemList = listOf(
+            PopupUiItem(
+                id = SHOW_FAVOURITE_ID,
+                name = getString(R.string.showOptionsShowFavourite)
+            ),
+            PopupUiItem(
+                id = SHOW_ALL_ID,
+                name = getString(R.string.showOptionsShowAll)
             )
+        )
+
+        popupMenu = PopupMenuWithList(
+            requireContext(),
+            fragmentBinding.showOptionsButton,
+            header = menuHeader,
+            itemList = menuItemList
+        )
+        popupMenu.onPopupMenuItemClickListener = this
+        fragmentBinding.showOptionsButton.apply {
+            setSafeOnClickListener {
+                popupMenu.show()
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        HomeFragmentState(isLoading = false)
-        fragmentComponent.inject(this)
+    override fun initBinding(): View {
         fragmentBinding = FragmentHomeBinding.inflate(layoutInflater, null, false)
         return fragmentBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         viewModel.onOpen()
     }
 
@@ -193,45 +197,41 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
         super.renderState(state)
 
         (state as HomeFragmentState).apply {
+            if (!isLoading) {
+                fragmentBinding.balancePanelBalance.text = tokenAmount.toString()
+                viewModel.saveTokensAmount(amount = tokenAmount)
 
-            fragmentBinding.balancePanelBalance.text = tokenAmount.toString()
+                chipsItemList.forEach {
+                    it.isSelected = it.id in viewModel.selectedCategories
+                }
 
-            chipsItemList.forEach {
-                it.isSelected = it.id in categoryIdChipList
+                chipsItemUiModelList.clear()
+                chipsItemUiModelList.addAll(chipsItemList)
+                populateChipsMenu()
+
+                menuItemUiModelList.clear()
+                menuItemUiModelList.addAll(menuItemList)
+                populateMenuRecyclerView()
             }
-
-            chipsItemUiModelList.clear()
-            chipsItemUiModelList.addAll(chipsItemList)
-            populateChipsMenu()
-
-            menuItemModelList.clear()
-            menuItemModelList.addAll(menuItemList)
-            populateMenuRecyclerView()
         }
     }
 
     private fun showAddTokensDialog() {
         val dialog = OtusDialogFragment.newInstance(OtusDialogFragment.DialogType.ADD_PROMO)
-        dialog.show(activity?.supportFragmentManager!!, OtusDialogFragment.DIALOG_TAG)
+        dialog.show(requireActivity().supportFragmentManager, OtusDialogFragment.DIALOG_TAG)
+        dialog.setPositiveCallback { _, code ->
+            viewModel.setPromoCode(code)
+        }
     }
 
     private fun showBottomSheetMenuItemDetail(item: MenuItemUiModel) {
-        val dialog = MenuItemDetailFragment.newInstance(
-            item = menuItemModelList.first { it.id == item.id },
-            index = selectedSizeIndex,
-            changeFavouriteStatus = { changeFavouriteStatus(item) },
-            addItemToCart = {
-                addItemToCart(item, it)
-            },
-            removeItemFromCart = {
-                removeItemFromCart(item, it)
-            })
-        dialog.show(activity?.supportFragmentManager!!, MenuItemDetailFragment.DIALOG_TAG)
-    }
+        val itemDetail = viewModel.getMenuItemDetailModel(item.id) ?: return
 
-    private fun changeSelectedSize(index: Int) {
-        selectedSizeIndex = index
-        populateMenuRecyclerView()
+        val dialog = MenuItemDetailFragment.newInstance(
+            item = itemDetail,
+            changeFavouriteStatus = { changeItemFavouriteStatus(item) }
+        )
+        dialog.show(requireActivity().supportFragmentManager, MenuItemDetailFragment.DIALOG_TAG)
     }
 
     private fun createChipsAdapter(): BaseDelegationAdapter {
@@ -246,9 +246,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
         return BaseDelegationAdapter(
             MenuAdapterDelegate.menuDelegate(
                 showDetails = ::showBottomSheetMenuItemDetail,
-                addToCart = ::addItemToCart,
-                removeFromCart = ::removeItemFromCart,
-                changeFavouriteStatus = ::changeFavouriteStatus
+                changeFavouriteStatus = ::changeItemFavouriteStatus
             )
         )
     }
@@ -258,92 +256,32 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
         menuAdapter.notifyItemChanged(index)
     }
 
-    private fun addItemToCart(item: MenuItemUiModel, selectedSize: Int? = null) {
-        lifecycleScope.launch {
-            val index = menuItemModelList.indexOfFirst { it.id == item.id }
-            menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] =
-                menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] + 1
+    private fun changeItemFavouriteStatus(item: MenuItemUiModel) {
+        val index = menuItemUiModelList.indexOf(item)
+        item.isInFavourite = !item.isInFavourite
+        menuItemUiModelList[index].isInFavourite = item.isInFavourite
+        if (getFavouriteModeStatus()) populateMenuRecyclerView() else updateMenuItem(item)
+        viewModel.changeItemFavouriteStatus(item)
 
-            if (menuItemModelList[index].sizes[selectedSize ?: selectedSizeIndex] == item.size) {
-                item.amountInCart = item.amountInCart + 1
-                updateMenuItem(item)
-            }
-
-            menuItemModelList[index].let {
-                cartKeeper.addItemToCart(
-                    item = MenuItemUiModel(
-                        id = it.id,
-                        name = it.name,
-                        categoryId = it.categoryId,
-                        picture = it.picture,
-                        description = it.description,
-                        isInFavourite = it.isInFavourite,
-                        size = it.sizes[selectedSize ?: selectedSizeIndex],
-                        amountInCart = it.amountInCart[selectedSize ?: selectedSizeIndex]
-                    ).toCartItem()
-                )
-            }
-        }
-    }
-
-    private fun removeItemFromCart(item: MenuItemUiModel, selectedSize: Int? = null) {
-        lifecycleScope.launch {
-            val index = menuItemModelList.indexOfFirst { it.id == item.id }
-            menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] =
-                menuItemModelList[index].amountInCart[selectedSize ?: selectedSizeIndex] - 1
-
-            if (menuItemModelList[index].sizes[selectedSize ?: selectedSizeIndex] == item.size) {
-                item.amountInCart = item.amountInCart - 1
-                updateMenuItem(item)
-            }
-
-            menuItemModelList[index].let {
-                cartKeeper.removeItemFromCart(
-                    item = MenuItemUiModel(
-                        id = it.id,
-                        name = it.name,
-                        categoryId = it.categoryId,
-                        picture = it.picture,
-                        description = it.description,
-                        isInFavourite = it.isInFavourite,
-                        size = it.sizes[selectedSize ?: selectedSizeIndex],
-                        amountInCart = it.amountInCart[selectedSize ?: selectedSizeIndex]
-                    ).toCartItem()
-                )
-            }
-        }
-    }
-
-    private fun changeFavouriteStatus(item: MenuItemUiModel) {
-        val index = menuItemModelList.indexOfFirst { it.id == item.id }
-        item.isInFavourite = menuItemModelList[index].isInFavourite
-        if (isFavouriteModeActive.value) populateMenuRecyclerView() else updateMenuItem(item)
     }
 
     private fun onModeChanged() {
-        fragmentBinding.showOptionsButton.text = if (isFavouriteModeActive.value) {
-            getString(R.string.showOptionsShowFavourite)
-        } else {
-            getString(R.string.showOptionsShowAll)
-        }
-
+        setCorrectModeName()
         populateMenuRecyclerView()
     }
 
     private fun filterMenuItem(chipItemUiModel: ChipItemUiModel) {
         chipsAdapter.notifyItemChanged(chipItemUiModel.id)
-        OtusLogger.log("$chipItemUiModel was pressed")
-
         if (chipItemUiModel.isSelected) {
-            categoryIdChipList.add(chipItemUiModel.id)
+            viewModel.selectedCategories.add(chipItemUiModel.id)
         } else {
-            categoryIdChipList.remove(chipItemUiModel.id)
+            viewModel.selectedCategories.remove(chipItemUiModel.id)
         }
 
-        OtusLogger.log("categoryIdChipList is $categoryIdChipList")
         populateMenuRecyclerView()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun populateChipsMenu() {
         chipsAdapter.apply {
             items = chipsItemUiModelList as List<RecyclerViewItem>?
@@ -351,37 +289,60 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun populateMenuRecyclerView() {
+        if (menuItemUiModelList.isEmpty()) return
         menuAdapter.apply {
-            items = (if (isFavouriteModeActive.value) {
-                if (categoryIdChipList.isNotEmpty()) {
-                    menuItemModelList.filter { it.categoryId in categoryIdChipList && it.isInFavourite }
+            items = (if (getFavouriteModeStatus()) {
+                if (viewModel.selectedCategories.isNotEmpty()) {
+                    menuItemUiModelList.filter { it.categoryId in viewModel.selectedCategories && it.isInFavourite }
                 } else {
-                    menuItemModelList.filter { it.isInFavourite }
+                    menuItemUiModelList.filter { it.isInFavourite }
                 }
             } else {
-                if (categoryIdChipList.isNotEmpty()) {
-                    menuItemModelList.filter { it.categoryId in categoryIdChipList }
+                if (viewModel.selectedCategories.isNotEmpty()) {
+                    menuItemUiModelList.filter { it.categoryId in viewModel.selectedCategories }
                 } else {
-                    menuItemModelList
+                    menuItemUiModelList
                 }
-            }).toUi()
+            })
             notifyDataSetChanged()
         }
     }
 
-    private fun List<MenuItemModel>.toUi(): List<MenuItemUiModel> {
-        return this.map {
-            MenuItemUiModel(
-                id = it.id,
-                name = it.name,
-                categoryId = it.categoryId,
-                picture = it.picture,
-                description = it.description,
-                isInFavourite = it.isInFavourite,
-                size = it.sizes[selectedSizeIndex],
-                amountInCart = it.amountInCart[selectedSizeIndex]
-            )
+    override fun onPopupMenuItemClicked(item: PopupUiItem) {
+        when (item.id) {
+            SHOW_ALL_ID -> {
+                viewModel.saveFavouriteModeStatus(isActive = false)
+
+            }
+            SHOW_FAVOURITE_ID -> {
+                viewModel.saveFavouriteModeStatus(isActive = true)
+
+            }
         }
+        setCorrectModeName()
+        popupMenu.close()
+    }
+
+    private fun setCorrectModeName() {
+        fragmentBinding.showOptionsButton.text = getString(
+            R.string.showOptionsMode,
+            if (getFavouriteModeStatus()) {
+                getString(R.string.showOptionsShowFavourite)
+            } else {
+                getString(R.string.showOptionsShowAll)
+            }
+        ).lowercase(Locale.ROOT)
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+    }
+
+    private fun getFavouriteModeStatus(): Boolean {
+        return viewModel.getFavouriteModeStatus()
+    }
+
+    companion object {
+        const val SHOW_ALL_ID = 0
+        const val SHOW_FAVOURITE_ID = 1
     }
 }

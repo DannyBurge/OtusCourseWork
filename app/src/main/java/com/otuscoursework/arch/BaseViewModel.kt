@@ -1,8 +1,10 @@
 package com.otuscoursework.arch
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.otuscoursework.network.NetworkRepository
+import com.otuscoursework.ui.main.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -18,8 +20,12 @@ abstract class BaseViewModel<S> : ViewModel() {
 
     protected fun S.render() {
         viewModelState = this
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             _viewModelFlow.emit(viewModelState)
         }
+    }
+
+    fun getStringById(@StringRes id: Int, vararg formatArgs: Any): String {
+        return MainActivity.INSTANCE.applicationContext.resources.getString(id, formatArgs)
     }
 }

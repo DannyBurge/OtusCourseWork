@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/RoundButtonDarkXLarge">
+    style="@style/RoundButtonStyle">
 
     <View
         android:id="@+id/favouriteIndicator"
-        style="@style/RoundButtonDarkXLarge"
+        style="@style/RoundButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:backgroundTint="@color/coral_200"
@@ -14,12 +13,16 @@
 
     <ImageView
         android:id="@+id/roundButtonIcon"
-        style="@style/RoundButtonIcon.Small"
+        style="@style/RoundButtonIcon"
         android:src="@drawable/icon_list"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/badgeNumber"
+        style="@style/SmallText"
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:background="@drawable/bg_round_button"
@@ -28,7 +31,6 @@
         android:includeFontPadding="false"
         android:text="0"
         android:textColor="@color/white"
-        android:textSize="@dimen/textXXXSmallSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

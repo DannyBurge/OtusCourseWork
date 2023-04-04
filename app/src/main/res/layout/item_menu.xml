@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_item_menu"
+    android:elevation="@dimen/elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginHorizontal="@dimen/marginXXSmall"
-        android:layout_marginTop="@dimen/marginXXSmall"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_item_menu"
-        android:elevation="@dimen/elevation"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/itemInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@drawable/bg_item_menu_image"
+            android:layout_marginEnd="@dimen/margin_big"
+            app:layout_constraintEnd_toStartOf="@+id/favouriteButton"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <View
             android:id="@+id/favouriteIndicator"
             android:layout_width="0dp"
@@ -33,6 +34,7 @@
             app:layout_constraintEnd_toEndOf="@id/favouriteButton"
             app:layout_constraintStart_toStartOf="@id/favouriteButton"
             app:layout_constraintTop_toTopOf="@id/favouriteButton" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/favouriteButton"
             android:layout_width="wrap_content"
@@ -52,33 +54,35 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/itemName"
-            android:layout_width="wrap_content"
+            style="@style/MediumText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/marginXXSmall"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="start"
             android:text="Название"
+            app:layout_constraintBottom_toTopOf="@+id/itemPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemImage" />
+            app:layout_constraintTop_toBottomOf="@+id/itemImage"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
         <TextView
             android:id="@+id/itemPrice"
+            style="@style/BigText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/marginXXSmall"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium"
             android:text="Р 460"
             android:textColor="@color/gold_200"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemName" />
+            app:layout_constraintTop_toBottomOf="@+id/itemName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.otuscoursework.view.expandable_button.ExpandableButton
-        android:id="@+id/expandableButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/elevation"
-        android:layout_marginEnd="@dimen/marginXXSmall"
-        android:layout_marginBottom="@dimen/marginXXSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

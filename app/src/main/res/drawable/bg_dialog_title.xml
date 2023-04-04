@@ -8,6 +8,6 @@
         android:endColor="@color/gold_200"
         android:startColor="@color/coral_200" />
     <corners
-        android:topLeftRadius="@dimen/cardCornerRadiusBig"
-        android:topRightRadius="@dimen/cardCornerRadiusBig" />
+        android:topLeftRadius="@dimen/corner_radius_big"
+        android:topRightRadius="@dimen/corner_radius_big" />
 </shape>

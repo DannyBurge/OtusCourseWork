@@ -7,39 +7,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.otuscoursework.R
 import com.otuscoursework.databinding.FragmentMenuItemDetailBinding
 import com.otuscoursework.databinding.ViewBottomSheetBottomBinding
 import com.otuscoursework.di.components.DaggerFragmentMenuItemDetailComponent
 import com.otuscoursework.di.components.FragmentMenuItemDetailComponent
 import com.otuscoursework.navigation.CiceroneAppNavigator
-import com.otuscoursework.ui.CartKeeper
 import com.otuscoursework.ui.main.MainActivity
-import com.otuscoursework.ui.models.MenuItemModel
+import com.otuscoursework.ui.models.MenuItemDetailModel
 import com.otuscoursework.utils_and_ext.setSafeOnClickListener
 import com.otuscoursework.view.badge_button.ButtonType
 import com.otuscoursework.view.size_changer.SizeChanger
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
+import kotlinx.coroutines.launch
 import java.io.Serializable
+import java.lang.Integer.min
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MenuItemDetailFragment : BottomSheetDialogFragment() {
-    private lateinit var menuItem: MenuItemModel
-    private var selectedSizeIndex: Int = SizeChanger.INDEX_CENTER
-    private lateinit var changeFavouriteStatus: () -> Unit
-    private lateinit var addItemToCart: (Int) -> Unit
-    private lateinit var removeItemFromCart: (Int) -> Unit
-    private lateinit var fragmentBinding: FragmentMenuItemDetailBinding
-
-    @Inject
-    lateinit var cartKeeper: CartKeeper
 
     @Inject
     lateinit var ciceroneAppNavigator: CiceroneAppNavigator
+
+    private lateinit var menuItem: MenuItemDetailModel
+    private var selectedSizeIndex: Int = SizeChanger.INDEX_CENTER
+    private lateinit var changeFavouriteStatus: () -> Unit
+    private lateinit var fragmentBinding: FragmentMenuItemDetailBinding
+
+    private val viewModel: MenuItemDetailFragmentViewModel by viewModels()
 
     lateinit var fragmentComponent: FragmentMenuItemDetailComponent
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +54,8 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
             .create(MainActivity.INSTANCE.activityComponent)
 
         menuItem = requireArguments().getParcelable(ITEM)!!
-        selectedSizeIndex = requireArguments().getInt(SELECTED_SIZE)
         changeFavouriteStatus =
             requireArguments().getSerializable(FAVOURITE_STATUS_CHANGE_UNIT) as () -> Unit
-        addItemToCart = requireArguments().getSerializable(ADD_TO_CART_UNIT) as (Int) -> Unit
-        removeItemFromCart =
-            requireArguments().getSerializable(REMOVE_FROM_CART_UNIT) as (Int) -> Unit
     }
 
     override fun onCreateView(
@@ -77,14 +77,24 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
 
     private fun initViews() {
         fragmentBinding.apply {
-            menuItemName.text = menuItem.name
+            fragmentTitle.text = menuItem.name
             descriptionInfo.text = menuItem.description
 
-            weightPart.text = menuItem.foodValue.weight
             ccalPart.text = menuItem.foodValue.ccal
             proteinsPart.text = menuItem.foodValue.proteins
             fatsPart.text = menuItem.foodValue.fats
             carbohydratesPart.text = menuItem.foodValue.carbohydrates
+
+            Picasso.get()
+                .load(menuItem.picture)
+                .transform(
+                    RoundedCornersTransformation(
+                        requireContext().resources.getDimension(R.dimen.corner_radius).toInt(),
+                        0,
+                    )
+                )
+                .fit()
+                .into(menuItemImage)
         }
         setFullFoodValue()
         initButtons()
@@ -133,6 +143,21 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         showFavouriteIndicator()
     }
 
+    private fun addItemToCart() {
+        lifecycleScope.launch {
+            menuItem.amountInCart[selectedSizeIndex]++
+            viewModel.addItemToCart(menuItem, selectedSizeIndex)
+        }
+    }
+
+    private fun removeItemFromCart() {
+        lifecycleScope.launch {
+            menuItem.amountInCart[selectedSizeIndex]--
+            viewModel.removeItemFromCart(menuItem, selectedSizeIndex)
+        }
+    }
+
+
     private fun showFavouriteIndicator() {
         fragmentBinding.favouriteButton.showIndicator(menuItem.isInFavourite)
     }
@@ -149,6 +174,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         behavior.peekHeight = (COLLAPSED_HEIGHT * density).toInt()
         behavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
+
         val coordinator =
             (dialog as BottomSheetDialog).findViewById<CoordinatorLayout>(com.google.android.material.R.id.coordinator)
         val containerLayout =
@@ -158,10 +184,10 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         initBottomPart(bottomPart)
 
         bottomPart.root.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
+            min(behavior.maxWidth, resources.displayMetrics.widthPixels),
             FrameLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            gravity = Gravity.BOTTOM
+            gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         }
         containerLayout?.addView(bottomPart.root)
 
@@ -201,7 +227,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
     private fun initBottomPart(bottomPart: ViewBottomSheetBottomBinding) {
         bottomPart.apply {
             sizeChanger.apply {
-                setItemNames(menuItem.sizes.map { it.displayName })
+                setItemNames(menuItem.subItems.map { it.displayName })
                 setCheckedItem(index = selectedSizeIndex)
                 setOnCheckedChangeListener {
                     selectedSizeIndex = it
@@ -212,27 +238,33 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
             addRemoveButton.apply {
                 setCounter(menuItem.amountInCart[selectedSizeIndex])
                 setOnPlusButtonCallback {
-                    addItemToCart(selectedSizeIndex)
+                    addItemToCart()
                     setCounter(menuItem.amountInCart[selectedSizeIndex])
                 }
                 setOnMinusButtonCallback {
-                    removeItemFromCart(selectedSizeIndex)
+                    removeItemFromCart()
                     setCounter(menuItem.amountInCart[selectedSizeIndex])
                 }
+            }
+            toCartButton.setSafeOnClickListener {
+                ciceroneAppNavigator.toCartScreen()
+                this@MenuItemDetailFragment.dismiss()
             }
         }
     }
 
     private fun setFullFoodValue() {
-        selectedSizeIndex
-
         fragmentBinding.apply {
-            weightFull.text = menuItem.sizes[selectedSizeIndex].foodValue.weight
-            ccalFull.text = menuItem.sizes[selectedSizeIndex].foodValue.ccal
-            proteinsFull.text = menuItem.sizes[selectedSizeIndex].foodValue.proteins
-            fatsFull.text = menuItem.sizes[selectedSizeIndex].foodValue.fats
-            carbohydratesFull.text = menuItem.sizes[selectedSizeIndex].foodValue.carbohydrates
-            price.text = "₽ ${menuItem.sizes[selectedSizeIndex].price}"
+
+            val weightRatio = (menuItem.subItems[selectedSizeIndex].weight).toFloat() / WEIGHT_100G
+
+            weightFull.text = menuItem.subItems[selectedSizeIndex].weight.toString()
+            ccalFull.text = (menuItem.foodValue.ccal.toInt() * weightRatio).toInt().toString()
+            proteinsFull.text = (menuItem.foodValue.proteins.toInt() * weightRatio).toInt().toString()
+            fatsFull.text = (menuItem.foodValue.fats.toInt() * weightRatio).toInt().toString()
+            carbohydratesFull.text = (menuItem.foodValue.carbohydrates.toInt() * weightRatio).toInt().toString()
+            price.text =
+                getString(R.string.priceTagAccurate, menuItem.subItems[selectedSizeIndex].price)
         }
     }
 
@@ -240,29 +272,22 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         private const val COLLAPSED_HEIGHT = 56
         const val DIALOG_TAG = "detailDialog"
 
+        const val WEIGHT_100G = 100F
+
         private const val ITEM = "item"
         private const val FAVOURITE_STATUS_CHANGE_UNIT = "changeFavouriteUnit"
-        private const val ADD_TO_CART_UNIT = "addToCartUnit"
-        private const val REMOVE_FROM_CART_UNIT = "removeFromCart"
-        private const val SELECTED_SIZE = "selectedSize"
         fun newInstance(
-            item: MenuItemModel,
-            index: Int,
+            item: MenuItemDetailModel,
             changeFavouriteStatus: () -> Unit,
-            addItemToCart: (Int) -> Unit,
-            removeItemFromCart: (Int) -> Unit
         ): MenuItemDetailFragment {
             val args = Bundle()
 
             args.putParcelable(ITEM, item)
-            args.putInt(SELECTED_SIZE, index)
 
             args.putSerializable(
                 FAVOURITE_STATUS_CHANGE_UNIT,
                 changeFavouriteStatus as Serializable
             )
-            args.putSerializable(ADD_TO_CART_UNIT, addItemToCart as Serializable)
-            args.putSerializable(REMOVE_FROM_CART_UNIT, removeItemFromCart as Serializable)
 
             val fragment = MenuItemDetailFragment()
             fragment.arguments = args

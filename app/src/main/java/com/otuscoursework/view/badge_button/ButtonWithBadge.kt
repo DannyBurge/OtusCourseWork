@@ -52,16 +52,6 @@ class ButtonWithBadge @JvmOverloads constructor(
                 ButtonType.TRASH -> iconTrash
             }
         )
-        if (typeButton == ButtonType.SALE || typeButton == ButtonType.ADD_TOKENS || typeButton == ButtonType.NOTIFICATION) {
-            binding.apply {
-                root.layoutParams = LayoutParams(
-                    resources.getDimension(R.dimen.roundButtonBgSizeXXLarge).toInt(),
-                    resources.getDimension(R.dimen.roundButtonBgSizeXXLarge).toInt()
-                )
-                roundButtonIcon.scaleX = 1.4F
-                roundButtonIcon.scaleY = 1.4F
-            }
-        }
     }
 
     companion object {

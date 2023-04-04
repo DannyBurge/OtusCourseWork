@@ -1,8 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/bg_card_panel">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +15,7 @@
             android:id="@+id/favouriteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/marginXSmall"
+            android:layout_marginEnd="@dimen/margin_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,24 +24,21 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/marginXSmall"
-            android:layout_marginStart="@dimen/marginXSmall"
+            android:layout_marginVertical="@dimen/margin_big"
+            android:layout_marginStart="@dimen/margin_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/menuItemName"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragmentTitle"
+            style="@style/BigText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Название"
-            android:textSize="20sp"
+            android:text="Роллы с яблоком и корицей"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/favouriteButton"
-            app:layout_constraintHorizontal_bias="0.527"
             app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,10 +67,10 @@
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/marginXSmall"
-            android:padding="@dimen/marginXSmall"
+            android:layout_margin="@dimen/margin_big"
             android:background="@drawable/bg_card_panel"
             android:elevation="@dimen/elevation"
+            android:padding="@dimen/margin_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,19 +78,24 @@
 
             <TextView
                 android:id="@+id/descriptionTitle"
+                style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 android:text="Описание"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/descriptionInfo"
+                style="@style/MediumText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
+                android:gravity="start"
                 android:text="Итальянская классика! Сыр Моцарелла, шампиньоны, ароматная ветчина, сочные томаты с фирменным томатным соусом"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />
@@ -103,17 +104,19 @@
                 android:id="@+id/divider1"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionInfo" />
 
             <TextView
                 android:id="@+id/foodValueTitle"
+                style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
-                android:text="Описание"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="Пищевая ценность"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider1" />
 
@@ -121,45 +124,50 @@
                 android:id="@+id/weightInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toStartOf="@+id/ccalInfo"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/foodValueTitle">
 
                 <TextView
                     android:id="@+id/weightPart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
                     android:background="@drawable/bg_round_button"
+
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="100"
+                    android:text="@string/weight_100"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/weightTitle"
+                    style="@style/SmallText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:gravity="center"
-                    android:textSize="@dimen/textXXSmallSize"
-                    android:includeFontPadding="false"
                     android:text="@string/weightInfoTitle"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/weightPart" />
 
                 <TextView
                     android:id="@+id/weightFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -173,20 +181,21 @@
                 android:id="@+id/ccalInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toStartOf="@+id/proteinsInfo"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@+id/weightInfo"
                 app:layout_constraintTop_toBottomOf="@id/foodValueTitle">
 
                 <TextView
                     android:id="@+id/ccalPart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -194,24 +203,26 @@
 
                 <TextView
                     android:id="@+id/ccalTitle"
+                    style="@style/SmallText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:gravity="center"
-                    android:textSize="@dimen/textXXSmallSize"
-                    android:includeFontPadding="false"
                     android:text="@string/ccalInfoTitle"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ccalPart" />
 
                 <TextView
                     android:id="@+id/ccalFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -225,20 +236,21 @@
                 android:id="@+id/proteinsInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toStartOf="@+id/fatsInfo"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@+id/ccalInfo"
                 app:layout_constraintTop_toBottomOf="@id/foodValueTitle">
 
                 <TextView
                     android:id="@+id/proteinsPart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -246,11 +258,11 @@
 
                 <TextView
                     android:id="@+id/proteinsTitle"
+                    style="@style/SmallText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:gravity="center"
-                    android:textSize="@dimen/textXXSmallSize"
-                    android:includeFontPadding="false"
                     android:text="@string/proteinsInfoTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -258,12 +270,13 @@
 
                 <TextView
                     android:id="@+id/proteinsFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -277,20 +290,21 @@
                 android:id="@+id/fatsInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toStartOf="@+id/carbohydratesInfo"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@+id/proteinsInfo"
                 app:layout_constraintTop_toBottomOf="@id/foodValueTitle">
 
                 <TextView
                     android:id="@+id/fatsPart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -298,11 +312,11 @@
 
                 <TextView
                     android:id="@+id/fatsTitle"
+                    style="@style/SmallText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:gravity="center"
-                    android:textSize="@dimen/textXXSmallSize"
-                    android:includeFontPadding="false"
                     android:text="@string/fatsInfoTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -310,12 +324,13 @@
 
                 <TextView
                     android:id="@+id/fatsFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -329,20 +344,21 @@
                 android:id="@+id/carbohydratesInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@+id/fatsInfo"
                 app:layout_constraintTop_toBottomOf="@id/foodValueTitle">
 
                 <TextView
                     android:id="@+id/carbohydratesPart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -350,11 +366,11 @@
 
                 <TextView
                     android:id="@+id/carbohydratesTitle"
+                    style="@style/SmallText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:textSize="@dimen/textXXSmallSize"
                     android:text="@string/carbohydratesInfoTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -362,12 +378,13 @@
 
                 <TextView
                     android:id="@+id/carbohydratesFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MediumText"
+                    android:layout_width="@dimen/main_size_48"
+                    android:layout_height="@dimen/main_size_48"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -381,24 +398,22 @@
                 android:id="@+id/divider2"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/weightInfo" />
 
             <TextView
                 android:id="@+id/price"
+                style="@style/TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/marginXXSmall"
+                android:layout_margin="@dimen/margin_medium"
                 android:text="P 360"
-                android:textStyle="bold"
-                android:includeFontPadding="false"
                 android:textColor="@color/gold_200"
-                android:textSize="@dimen/textXXLargeSize"
-                app:layout_constraintBottom_toBottomOf="parent"
+
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider2" />
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

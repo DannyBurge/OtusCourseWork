@@ -1,9 +1,14 @@
 package com.otuscoursework.di.modules
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import com.otuscoursework.BuildConfig
+import com.otuscoursework.OtusApplication
 import com.otuscoursework.network.NetworkApi
 import com.otuscoursework.network.NetworkRepository
+import com.otuscoursework.ui.UserDataKeeper
 import com.otuscoursework.ui.main.MainActivity
 import com.otuscoursework.utils_and_ext.API_KEY
 import com.otuscoursework.utils_and_ext.BASE_URL
@@ -20,7 +25,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkApiModule {
+class NetworkApiModule {
+
     @Provides
     @Singleton
     fun provideBaseUrl(): String {
@@ -33,31 +39,47 @@ object NetworkApiModule {
         return Moshi.Builder().build()
     }
 
+    @Provides
+    @Singleton
+    fun provideChucker(context: Context): ChuckerInterceptor {
+        val chuckerCollector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
+
+        return ChuckerInterceptor
+            .Builder(context)
+            .collector(chuckerCollector)
+            .alwaysReadResponseBody(true)
+            .build()
+    }
+
+
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(chuckerInterceptor: ChuckerInterceptor): OkHttpClient {
         return if (BuildConfig.DEBUG) {
 
-            val requestInterceptor = Interceptor { chain ->
-                val url = chain.request()
-                    .url()
-                    .newBuilder()
-                    .addQueryParameter("api_key", API_KEY)
-                    .build()
-
-                val request = chain.request()
-                    .newBuilder()
-                    .url(url)
-                    .build()
-                return@Interceptor chain.proceed(request)
-            }
+//            val requestInterceptor = Interceptor { chain ->
+//                val url = chain.request()
+//                    .url()
+//                    .newBuilder()
+//                    .addQueryParameter("api_key", API_KEY)
+//                    .build()
+//
+//                val request = chain.request()
+//                    .newBuilder()
+//                    .url(url)
+//                    .build()
+//
+//                return@Interceptor chain.proceed(request)
+//            }
 
             OkHttpClient
                 .Builder()
-                .addInterceptor(requestInterceptor)
-                .addInterceptor(
-                    ChuckerInterceptor.Builder(MainActivity.INSTANCE.applicationContext).build()
-                )
+//                .addInterceptor(requestInterceptor)
+                .addInterceptor(chuckerInterceptor)
                 .build()
         } else {
             OkHttpClient
@@ -68,7 +90,11 @@ object NetworkApiModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String, moshi: Moshi, client: OkHttpClient): NetworkApi {
+    fun provideRetrofit(
+        baseUrl: String,
+        moshi: Moshi,
+        client: OkHttpClient
+    ): NetworkApi {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
@@ -79,7 +105,10 @@ object NetworkApiModule {
 
     @Provides
     @Singleton
-    fun provideNetworkRepository(networkApi: NetworkApi): NetworkRepository {
-        return NetworkRepository(networkApi)
+    fun provideNetworkRepository(
+        networkApi: NetworkApi,
+        userDataKeeper: UserDataKeeper
+    ): NetworkRepository {
+        return NetworkRepository(networkApi, userDataKeeper)
     }
 }

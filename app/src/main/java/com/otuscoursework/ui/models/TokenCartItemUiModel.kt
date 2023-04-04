@@ -2,10 +2,7 @@ package com.otuscoursework.ui.models
 
 import com.otuscoursework.arch.recycler.RecyclerViewItem
 
-data class CartCheckItemUiModel(
+data class TokenCartItemUiModel(
     override val id: Int,
-    val name: String,
-    var count: Int,
-    val price: Int
-) : RecyclerViewItem {
-}
+    val amount: Int
+): RecyclerViewItem

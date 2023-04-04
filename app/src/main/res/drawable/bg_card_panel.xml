@@ -2,8 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="1000dp"
     android:height="100dp"
-    android:viewportWidth="100"
-    android:viewportHeight="100">
+    android:shape="rectangle">
     <solid android:color="@color/white" />
-    <corners android:radius="@dimen/cardCornerRadius" />
+    <corners android:radius="@dimen/corner_radius" />
 </shape>

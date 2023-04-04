@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">OTUS Kitchen</string>
+    <!--Fragment titles-->
+    <string name="cartFragmentTitle">Корзина</string>
+    <string name="notificationFragmentTitle">Уведомления</string>
+    <string name="orderFragmentTitle">Заказы</string>
+    <string name="saleFragmentTitle">Акции</string>
+
+    <!--Error messages-->
+    <string name="promo_code_not_valid">Промокод недействителен</string>
+    <string name="server_error">Ошибка сервера</string>
 
     <!--Home Fragment-->
     <string name="mainTitle">OTUS</string>
@@ -9,19 +18,26 @@
     <string name="sizeCenter">Сред.</string>
     <string name="sizeRight">Бол.</string>
 
-    <!--Balance Panel-->
     <string name="balancePanelTitle">Мои баллы:</string>
     <string name="addTokensButtonTitle">Пополнение</string>
-    <string name="saleButtonTitle">Акции</string>
-    <string name="notificationsButtonTitle">Уведомления</string>
+    <string name="ordersButtonTitle">Заказы</string>
+    <string name="cartButtonTitle">Корзина</string>
 
-    <string name="showOptionsShowAll">Показать все</string>
+    <string name="popupMenuTitle">Режим отображения:</string>
+    <string name="showOptionsMode">Показать %s</string>
+    <string name="showOptionsShowAll">Все</string>
     <string name="showOptionsShowFavourite">Избранное</string>
+
+    <string name="sizeText">Размер:</string>
 
     <!--Dialog-->
     <string name="dialogAddPromoTitle">Введите промокод</string>
     <string name="dialogAddAddressTitle">Добавить адрес</string>
     <string name="dialogClearCartTitle">Очистить корзину?</string>
+
+    <string name="dialogAddPromoValueHint">Промокод</string>
+    <string name="dialogAddAddressNameHint">Введите псевдоним</string>
+    <string name="dialogAddAddressValueHint">Введите адрес</string>
 
     <string name="dialogOkButtonTitle">Подтвердить</string>
     <string name="dialogCancelButtonTitle">Отмена</string>
@@ -32,5 +48,30 @@
     <string name="proteinsInfoTitle">Белки</string>
     <string name="fatsInfoTitle">Жиры</string>
     <string name="carbohydratesInfoTitle">Углеводы</string>
+    <string name="priceTag">от ₽ %d</string>
+    <string name="priceTagAccurate">₽ %d</string>
+    <string name="toCartButtonTitle">Перейти в корзину</string>
+
+    <!--Cart Fragment-->
+    <string name="addressTitle">Адрес доставки:</string>
+    <string name="amountAndPrice">%d x %d</string>
+
+    <string name="promoTokenSize">Баллы OTUS KITCHEN</string>
+    <string name="pay">Оплатить ₽ %d</string>
+
+    <string name="emptyCart">В корзине ничего нет</string>
+
+    <string name="tokenUserAdd">Получить %d</string>
+    <string name="tokenUserRemove">Списать %d</string>
+    <string name="weight_100">100</string>
+
+    <string name="address_options_title">Адрес доставки</string>
+    <string name="add_new_address">Добавить</string>
+
+    <!--Notification Fragment-->
+
+    <!--Order Fragment-->
+    <string name="currentOrder">Текущий заказ</string>
+    <string name="tokens_added">Бонусы OTUS Kitchen</string>
 
 </resources>
