@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.otuscoursework.ui.views.size_changer.SizeChanger
+        android:id="@+id/sizeChanger"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_big"
+        android:background="@drawable/bg_card_panel"
+        android:elevation="@dimen/elevation"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.otuscoursework.ui.views.expandable_button.ExpandableButton
+        android:id="@+id/addRemoveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_big"
+        android:background="@drawable/bg_expandable_button"
+        android:elevation="@dimen/elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/toCartButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sizeChanger" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/toCartButton"
+        style="@style/ButtonStyleRed"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/main_size_48"
+
+        android:layout_marginEnd="@dimen/margin_big"
+        android:elevation="@dimen/elevation"
+        android:text="@string/toCartButtonTitle"
+        android:textAllCaps="false"
+
+        app:layout_constraintBottom_toBottomOf="@+id/addRemoveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addRemoveButton"
+        app:layout_constraintTop_toTopOf="@+id/addRemoveButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

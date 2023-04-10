@@ -1,19 +1,18 @@
 package com.otuscoursework
 
 import android.app.Application
-import com.github.ajalt.timberkt.Timber
-import com.otuscoursework.ui.main.MainActivity
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 @HiltAndroidApp
 class OtusApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        Timber.plant(Timber.DebugTree())
 
+    override fun onCreate() {
+        Timber.plant(DebugTree())
+        super.onCreate()
         INSTANCE = this
     }
-
 
 
     companion object {
