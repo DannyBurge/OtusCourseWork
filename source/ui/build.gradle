@@ -13,7 +13,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 24
+        minSdk 21
         targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -44,7 +44,7 @@ dependencies {
     implementation project(':source:utils_n_ext')
     implementation project(':source:network')
     implementation project(':source:cart_keeper')
-    implementation project(':source:user_data_keeper')
+    implementation project(':source:security')
 
     // Dagger Hilt https://dagger.dev/hilt/
     implementation 'com.google.dagger:hilt-android:2.45'
@@ -75,6 +75,9 @@ dependencies {
     // Picasso https://github.com/square/picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'
+
+
+    implementation "androidx.biometric:biometric-ktx:1.2.0-alpha03"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

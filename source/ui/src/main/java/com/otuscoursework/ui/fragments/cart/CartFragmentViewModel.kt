@@ -6,12 +6,11 @@ import com.otuscourcework.network.NetworkRepository
 import com.otuscourcework.network.models.OrderItem
 import com.otuscourcework.network.models.OrderPosition
 import com.otuscourcework.network.models.UserDeliveryAddress
-import com.otuscourcework.user_data_keeper.UserDataKeeper
 import com.otuscourcework.utils.toFullIsoDate
 import com.otuscoursework.resource.R
+import com.otuscoursework.ui.arch.BaseViewModel
 import com.otuscoursework.ui.fragments.cart.ui_model.AddressItemUiModel
 import com.otuscoursework.ui.fragments.cart.ui_model.CartItemUiModel
-import com.otuscoursework.ui.arch.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,9 +26,6 @@ class CartFragmentViewModel @Inject constructor(
 
     @Inject
     lateinit var cartKeeper: CartKeeper
-
-    @Inject
-    lateinit var userDataKeeper: UserDataKeeper
 
     var tokensSpendOnOrder = 0
 

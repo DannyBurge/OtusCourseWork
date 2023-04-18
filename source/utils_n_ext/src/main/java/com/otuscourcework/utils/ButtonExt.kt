@@ -1,13 +1,14 @@
 package com.otuscourcework.utils
 
+import android.view.View
 import android.widget.Button
 
-fun Button.enable(isEnabled: Boolean) {
+fun View.enable(isEnabled: Boolean) {
     isClickable = isEnabled
     isFocusable = isEnabled
     alpha = if (isEnabled) {
         1.0F
     } else {
-        0.6F
+        0.5F
     }
 }

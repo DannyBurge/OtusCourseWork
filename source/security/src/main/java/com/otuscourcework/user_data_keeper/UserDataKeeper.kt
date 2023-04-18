@@ -4,45 +4,43 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
-import com.otuscourcework.utils.OtusLogger
+import androidx.security.crypto.MasterKey
 import javax.inject.Inject
 
-class UserDataKeeper @Inject constructor(context: Context, otusLogger: OtusLogger) {
+class UserDataKeeper @Inject constructor(
+    context: Context,
+    keys: Keys
+) {
 
-    private val sharedPrefs: SharedPreferences = try {
+    private val sharedPrefs: SharedPreferences by lazy {
         EncryptedSharedPreferences.create(
+            context.applicationContext,
             PREFERENCES_FILENAME,
-            KEY_ALIAS,
-            context,
+            keys.getMasterKey(MasterKey.KeyScheme.AES256_GCM),
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-    } catch (e: Exception) {
-        otusLogger.log(e)
-        try {
-            val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-            EncryptedSharedPreferences.create(
-                PREFERENCES_FILENAME,
-                masterKeyAlias,
-                context,
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            ).also {
-                otusLogger
-                    .log("Retry of EncryptedSharedPreferences.create() success.")
-            }
-        } catch (e: Exception) {
-            otusLogger.log(e)
-            otusLogger.log("Retry of EncryptedSharedPreferences.create() fail. Prefs without encryption.")
-            context.getSharedPreferences(PREFERENCES_FILENAME, Context.MODE_PRIVATE)
-        }
     }
+
+    var hashPassword: String?
+        get() = sharedPrefs.getString(HASH_PASSWORD, null)
+        @Synchronized
+        set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(HASH_PASSWORD, value) }
+
+    var passwordKey: String?
+        get() = sharedPrefs.getString(CRYPTO_PASS_KEY, "")
+        @Synchronized
+        set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(CRYPTO_PASS_KEY, value) }
 
     var apiToken: String?
         get() = sharedPrefs.getString(API_TOKEN, "")
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(API_TOKEN, value) }
+
+    var address: String
+        get() = sharedPrefs.getString(ADDRESS, "") ?: ""
+        @Synchronized
+        set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(ADDRESS, value) }
 
     var tokensAmount: Int?
         get() = sharedPrefs.getInt(TOKENS_AMOUNT, 0)
@@ -65,16 +63,23 @@ class UserDataKeeper @Inject constructor(context: Context, otusLogger: OtusLogge
         get() = sharedPrefs.getBoolean(IS_FAVOURITE_MODE_ACTIVE, false)
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
-            putBoolean(
-                IS_FAVOURITE_MODE_ACTIVE,
-                value
-            )
+            putBoolean(IS_FAVOURITE_MODE_ACTIVE, value)
         }
 
-    var address: String
-        get() = sharedPrefs.getString(ADDRESS, "") ?: ""
+    var isAuthActive: Boolean
+        get() = sharedPrefs.getBoolean(IS_AUTH_ACTIVE, false)
         @Synchronized
-        set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(ADDRESS, value) }
+        set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
+            putBoolean(IS_AUTH_ACTIVE, value)
+        }
+
+    var isBiometricAuthActive: Boolean
+        get() = sharedPrefs.getBoolean(IS_BIOMETRIC_AUTH_ACTIVE, false)
+        @Synchronized
+        set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
+            putBoolean(IS_BIOMETRIC_AUTH_ACTIVE, value)
+        }
+
 
     companion object {
         private const val API_TOKEN = "token"
@@ -82,10 +87,15 @@ class UserDataKeeper @Inject constructor(context: Context, otusLogger: OtusLogge
         private const val TOKENS_AMOUNT = "tokens_amount"
         private const val FAVOURITE_ITEMS_LIST = "favourite_items"
         private const val IS_FAVOURITE_MODE_ACTIVE = "is_favourite_mode_active"
+        private const val IS_BIOMETRIC_AUTH_ACTIVE = "is_biometric_auth_active"
+        private const val IS_AUTH_ACTIVE = "is_auth_active"
 
-        private const val STRING_SEPARATOR = ","
-        private const val PREFERENCES_FILENAME = "user_preferences"
-        private const val KEY_ALIAS = "Otus_key"
+        private const val HASH_PASSWORD = "hash_password"
+        private const val CRYPTO_PASS_KEY = "crypto_pass_key"
+
         private const val COMMIT_PREF = true
+
+        const val STRING_SEPARATOR = ","
+        private const val PREFERENCES_FILENAME = "user_preferences"
     }
 }

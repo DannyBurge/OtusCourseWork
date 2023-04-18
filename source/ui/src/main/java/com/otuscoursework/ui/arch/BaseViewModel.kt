@@ -3,8 +3,8 @@ package com.otuscoursework.ui.arch
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.otuscourcework.user_data_keeper.UserDataKeeper
 import com.otuscoursework.resource.ResHelper
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,7 +14,10 @@ import javax.inject.Inject
 abstract class BaseViewModel<S>: ViewModel() {
 
     @Inject
-    lateinit var res: ResHelper
+    lateinit var resHelper: ResHelper
+
+    @Inject
+    lateinit var userDataKeeper: UserDataKeeper
 
     abstract var viewModelState: S
 
@@ -29,6 +32,6 @@ abstract class BaseViewModel<S>: ViewModel() {
     }
 
     fun getStringById(@StringRes id: Int, vararg formatArgs: Any): String {
-        return res.getStringById(id, formatArgs)
+        return resHelper.getStringById(id, formatArgs)
     }
 }

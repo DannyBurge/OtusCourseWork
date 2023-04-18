@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:visibility="gone"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/auth_title"
+        style="@style/MediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_title"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big"
+        app:layout_constraintBottom_toTopOf="@+id/passKeyboardContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_title">
+
+        <View
+            android:id="@+id/firstPassDigit"
+            android:layout_width="@dimen/main_size_12"
+            android:layout_height="@dimen/main_size_12"
+            android:background="@drawable/bg_round_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/secondPassDigit"
+            android:layout_width="@dimen/main_size_12"
+            android:layout_height="@dimen/main_size_12"
+            android:layout_marginStart="@dimen/margin_big"
+            android:background="@drawable/bg_round_button"
+            app:layout_constraintStart_toEndOf="@id/firstPassDigit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/thirdPassDigit"
+            android:layout_width="@dimen/main_size_12"
+            android:layout_height="@dimen/main_size_12"
+            android:layout_marginStart="@dimen/margin_big"
+            android:background="@drawable/bg_round_button"
+            app:layout_constraintStart_toEndOf="@id/secondPassDigit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/fourthPassDigit"
+            android:layout_width="@dimen/main_size_12"
+            android:layout_height="@dimen/main_size_12"
+            android:layout_marginStart="@dimen/margin_big"
+            android:background="@drawable/bg_round_button"
+            app:layout_constraintStart_toEndOf="@id/thirdPassDigit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/passKeyboardContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_size_48"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/oneButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/twoButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/twoButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/twoButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="2"
+            app:layout_constraintBottom_toTopOf="@+id/fiveButton"
+            app:layout_constraintEnd_toStartOf="@+id/threeButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/oneButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/threeButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/twoButton"
+            app:layout_constraintTop_toTopOf="@+id/twoButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fourButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            app:layout_constraintEnd_toStartOf="@+id/fiveButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fiveButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fiveButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="5"
+            app:layout_constraintBottom_toTopOf="@+id/eightButton"
+            app:layout_constraintEnd_toStartOf="@+id/sixButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fourButton"
+            app:layout_constraintTop_toBottomOf="@+id/twoButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sixButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fiveButton"
+            app:layout_constraintTop_toTopOf="@+id/fiveButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sevenButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            app:layout_constraintEnd_toStartOf="@+id/eightButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/eightButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/eightButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="8"
+            app:layout_constraintBottom_toTopOf="@+id/zeroButton"
+            app:layout_constraintEnd_toStartOf="@+id/nineButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sevenButton"
+            app:layout_constraintTop_toBottomOf="@+id/fiveButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nineButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/eightButton"
+            app:layout_constraintTop_toTopOf="@+id/eightButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/zeroButton"
+            style="@style/ButtonStyleRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_big"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nineButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sevenButton"
+            app:layout_constraintTop_toBottomOf="@+id/eightButton" />
+
+        <View
+            android:id="@+id/fingerprintButton"
+            android:layout_width="@dimen/main_size_32"
+            android:layout_height="@dimen/main_size_32"
+            android:background="@drawable/icon_fingerprint"
+            android:backgroundTint="@color/black_transparent_25"
+            app:layout_constraintBottom_toBottomOf="@+id/zeroButton"
+            app:layout_constraintEnd_toEndOf="@+id/nineButton"
+            app:layout_constraintStart_toStartOf="@+id/nineButton"
+            app:layout_constraintTop_toTopOf="@+id/zeroButton" />
+
+        <View
+            android:id="@+id/deleteDigitButton"
+            android:layout_width="@dimen/main_size_32"
+            android:layout_height="@dimen/main_size_32"
+            android:background="@drawable/icon_delete"
+            android:visibility="gone"
+            android:backgroundTint="@color/black_transparent_25"
+            app:layout_constraintBottom_toBottomOf="@+id/zeroButton"
+            app:layout_constraintEnd_toEndOf="@+id/nineButton"
+            app:layout_constraintStart_toStartOf="@+id/nineButton"
+            app:layout_constraintTop_toTopOf="@+id/zeroButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

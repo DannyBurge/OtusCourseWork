@@ -1,10 +1,16 @@
-package com.otuscourcework.network
+package com.otuscourcework.network.di
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
+import com.otuscourcework.network.BuildConfig
+import com.otuscourcework.network.NetworkApi
+import com.otuscourcework.network.NetworkRepository
 import com.otuscourcework.network.NetworkRepository.Companion.BASE_URL
+import com.otuscourcework.user_data_keeper.Security
 import com.otuscourcework.user_data_keeper.UserDataKeeper
 import com.otuscourcework.utils.OtusLogger
 import com.squareup.moshi.Moshi
@@ -52,12 +58,22 @@ class NetworkRepositoryModule {
 
     @Singleton
     @Provides
-    fun provideApiInterceptor(userDataKeeper: UserDataKeeper): Interceptor {
+    fun provideApiInterceptor(
+        userDataKeeper: UserDataKeeper,
+        security: Security
+    ): Interceptor {
+
+        val apiToken = if (userDataKeeper.apiToken.isNullOrEmpty()) {
+            null
+        } else {
+            security.decryptAes(userDataKeeper.apiToken!!)
+        }
+
         return Interceptor { chain ->
             val url = chain.request()
                 .url()
                 .newBuilder()
-                .addQueryParameter("key", userDataKeeper.apiToken)
+                .addQueryParameter("key", apiToken)
                 .build()
 
             val request = chain.request()

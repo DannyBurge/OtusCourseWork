@@ -48,6 +48,7 @@ class ButtonWithBadge @JvmOverloads constructor(
                 ButtonType.SALE -> iconSale
                 ButtonType.ADD_TOKENS -> iconAddTokens
                 ButtonType.TRASH -> iconTrash
+                ButtonType.SETTINGS -> iconSettings
             }
         )
     }
@@ -63,5 +64,6 @@ class ButtonWithBadge @JvmOverloads constructor(
         private val iconSale = R.drawable.icon_sale
         private val iconAddTokens = R.drawable.icon_add_token
         private val iconTrash = R.drawable.icon_trash
+        private val iconSettings = R.drawable.icon_setting
     }
 }

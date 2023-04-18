@@ -10,5 +10,6 @@ enum class ButtonType {
     LIST,
     SALE,
     ADD_TOKENS,
-    TRASH
+    TRASH,
+    SETTINGS
 }

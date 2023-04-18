@@ -1,12 +1,14 @@
 package com.otuscoursework.ui.fragments.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.otuscourcework.cart_keeper.CartKeeper
 import com.otuscourcework.network.NetworkRepository
 import com.otuscourcework.network.models.BalanceHistoryItem
 import com.otuscourcework.network.models.CategoryItem
 import com.otuscourcework.network.models.MenuItem
-import com.otuscourcework.user_data_keeper.UserDataKeeper
+import com.otuscourcework.user_data_keeper.Security
 import com.otuscourcework.utils.toFullIsoDate
 import com.otuscoursework.resource.R
 import com.otuscoursework.ui.arch.BaseViewModel
@@ -34,7 +36,7 @@ class HomeFragmentViewModel @Inject constructor(
     lateinit var cartKeeper: CartKeeper
 
     @Inject
-    lateinit var userDataKeeper: UserDataKeeper
+    lateinit var security: Security
 
     val selectedCategories: MutableList<Int> = mutableListOf()
 
@@ -75,7 +77,7 @@ class HomeFragmentViewModel @Inject constructor(
                 return@launch
             }
 
-            userDataKeeper.apiToken = validKey.key
+            userDataKeeper.apiToken = security.encryptAes(validKey.key)
 
 
             val balanceCall = async { networkRepository.getUserBalanceHistory(true) }

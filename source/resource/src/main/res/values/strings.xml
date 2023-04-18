@@ -5,6 +5,7 @@
     <string name="notificationFragmentTitle">Уведомления</string>
     <string name="orderFragmentTitle">Заказы</string>
     <string name="saleFragmentTitle">Акции</string>
+    <string name="settingsFragmentTitle">Настройки</string>
 
     <!--Error messages-->
     <string name="promo_code_not_valid">Промокод недействителен</string>
@@ -68,10 +69,22 @@
     <string name="address_options_title">Адрес доставки</string>
     <string name="add_new_address">Добавить</string>
 
-    <!--Notification Fragment-->
+    <!--Auth Fragment-->
+    <string name="biometric_login_title">Вход в OTUS Kitchen</string>
+    <string name="biometric_login_dismiss">Использовать пароль</string>
+
+    <string name="auth_title">Введите пароль</string>
+    <string name="auth_title_create_pass">Придумайте пароль</string>
+    <string name="auth_title_repeat_pass">Повторите пароль</string>
+
+    <string name="create_pass_error">Пароли не совпадают</string>
 
     <!--Order Fragment-->
     <string name="currentOrder">Текущий заказ</string>
     <string name="tokens_added">Бонусы OTUS Kitchen</string>
+
+    <!--Settings Fragment-->
+    <string name="securityAuthSetting">Вход по паролю</string>
+    <string name="fingerPrintSetting">Вход по отпечатку пальца</string>
 
 </resources>

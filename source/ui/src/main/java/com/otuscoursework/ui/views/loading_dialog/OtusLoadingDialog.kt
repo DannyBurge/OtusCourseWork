@@ -18,6 +18,7 @@ class OtusLoadingDialog : DialogFragment() {
     private lateinit var rotateAnimation: RotateAnimation
 
     var isShown = false
+    private set
 
     init {
         initRotation()

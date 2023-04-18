@@ -2,8 +2,10 @@ package com.otuscoursework.ui.fragments.home
 
 import android.annotation.SuppressLint
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -87,6 +89,11 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>(),
             toAddTokensButton.apply {
                 setButtonType(ButtonType.ADD_TOKENS)
                 setSafeOnClickListener { showAddTokensDialog() }
+            }
+
+            toSettingsButton.apply {
+                setButtonType(ButtonType.SETTINGS)
+                setSafeOnClickListener { ciceroneAppNavigator.toSettingsScreen() }
             }
         }
     }

@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.otuscourcework.utils.OtusLogger
+import com.otuscoursework.resource.ResHelper
+import com.otuscoursework.ui.main.MainActivity
 import com.otuscoursework.ui.navigation.CiceroneAppNavigator
 import com.otuscoursework.ui.views.loading_dialog.OtusLoadingDialog
 import kotlinx.coroutines.launch
@@ -22,6 +24,7 @@ abstract class BaseFragment<out V : BaseViewModel<*>> : Fragment() {
 
     @Inject
     lateinit var ciceroneAppNavigator: CiceroneAppNavigator
+
     @Inject
     lateinit var otusLogger: OtusLogger
 
@@ -66,15 +69,11 @@ abstract class BaseFragment<out V : BaseViewModel<*>> : Fragment() {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    private val progressDialog = OtusLoadingDialog()
     private fun showLoading() {
-        otusLogger.log("showLoading")
-        if (progressDialog.isShown) hideLoading()
-        progressDialog.show()
+        MainActivity.INSTANCE.showLoading()
     }
 
     private fun hideLoading() {
-        otusLogger.log("hideLoading")
-        progressDialog.dismiss()
+        MainActivity.INSTANCE.hideLoading()
     }
 }

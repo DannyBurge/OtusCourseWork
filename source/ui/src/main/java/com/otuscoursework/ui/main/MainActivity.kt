@@ -2,12 +2,16 @@ package com.otuscoursework.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.otuscoursework.ui.R
 import com.otuscoursework.ui.databinding.ActivityMainBinding
 import com.otuscoursework.ui.navigation.CiceroneAppNavigator
+import com.otuscoursework.ui.views.loading_dialog.OtusLoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         updateBorderPadding()
         setContentView(activityBinding.root)
-        ciceroneAppNavigator.toHomeScreen()
+        ciceroneAppNavigator.toAuthScreen()
     }
 
     override fun onResume() {
@@ -51,11 +55,25 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
+
+    private var progressDialog: OtusLoadingDialog? = null
+    fun showLoading() {
+        if (progressDialog == null) progressDialog = OtusLoadingDialog()
+        if (!progressDialog!!.isShown) progressDialog!!.show()
+    }
+
+    fun hideLoading() {
+        if (progressDialog == null) progressDialog = OtusLoadingDialog()
+        if (progressDialog!!.isShown) progressDialog!!.dismiss()
+    }
+
     private fun updateBorderPadding() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        ViewCompat.setOnApplyWindowInsetsListener(activityBinding.mainActivityFragmentContainer) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(activityBinding.mainActivityFragmentContainer) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
-            view.updatePadding(0, insets.top, 0, 0)
+            val layoutParams =
+                ConstraintLayout.LayoutParams(resources.displayMetrics.widthPixels, insets.top)
+            activityBinding.topStatusBarPanel.layoutParams = layoutParams
             WindowInsetsCompat.CONSUMED
         }
     }

@@ -16,8 +16,8 @@
             <option value="$PROJECT_DIR$/source/cart_keeper" />
             <option value="$PROJECT_DIR$/source/network" />
             <option value="$PROJECT_DIR$/source/resource" />
+            <option value="$PROJECT_DIR$/source/security" />
             <option value="$PROJECT_DIR$/source/ui" />
-            <option value="$PROJECT_DIR$/source/user_data_keeper" />
             <option value="$PROJECT_DIR$/source/utils_n_ext" />
           </set>
         </option>

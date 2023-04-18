@@ -16,7 +16,7 @@ rootProject.name = "OtusCourseWork"
 include ':app'
 include ':source:network'
 include ':source:utils_n_ext'
-include ':source:user_data_keeper'
+include ':source:security'
 include ':source:cart_keeper'
 include ':source:ui'
 include ':source:resource'

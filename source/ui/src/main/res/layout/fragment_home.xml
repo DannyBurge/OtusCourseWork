@@ -36,12 +36,21 @@
         app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <com.otuscoursework.ui.views.badge_button.ButtonWithBadge
-        android:id="@+id/toNotificationButton"
+        android:id="@+id/toSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_big"
         android:layout_marginEnd="@dimen/margin_big"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.otuscoursework.ui.views.badge_button.ButtonWithBadge
+        android:id="@+id/toNotificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
+        app:layout_constraintEnd_toStartOf="@id/toSettingsButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

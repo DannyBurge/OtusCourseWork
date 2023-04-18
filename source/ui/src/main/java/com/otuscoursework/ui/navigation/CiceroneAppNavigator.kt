@@ -6,6 +6,10 @@ import javax.inject.Inject
 class CiceroneAppNavigator @Inject constructor(
     private val appRouter: Router
 ) {
+    fun toAuthScreen(isCreatePasswordMode: Boolean = false) {
+        appRouter.navigateTo(Screens.authScreen(isCreatePasswordMode))
+    }
+
     fun toHomeScreen() {
         appRouter.navigateTo(Screens.homeScreen())
     }
@@ -20,6 +24,10 @@ class CiceroneAppNavigator @Inject constructor(
 
     fun toNotificationScreen() {
         appRouter.navigateTo(Screens.notificationsScreen())
+    }
+
+    fun toSettingsScreen() {
+        appRouter.navigateTo(Screens.settingsScreen())
     }
 
     fun toSaleScreen() {
