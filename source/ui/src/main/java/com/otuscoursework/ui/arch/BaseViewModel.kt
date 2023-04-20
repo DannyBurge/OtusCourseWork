@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.otuscourcework.user_data_keeper.UserDataKeeper
 import com.otuscoursework.resource.ResHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,13 +21,13 @@ abstract class BaseViewModel<S>: ViewModel() {
 
     abstract var viewModelState: S
 
-    private val _viewModelFlow = MutableSharedFlow<S>()
-    val viewModelFlow: SharedFlow<S> = _viewModelFlow
+    private val _viewModelFlow = MutableStateFlow(viewModelState)
+    val viewModelFlow: StateFlow<S> = _viewModelFlow
 
     protected fun S.render() {
         viewModelState = this
         viewModelScope.launch(Dispatchers.IO) {
-            _viewModelFlow.emit(viewModelState)
+            _viewModelFlow.value = viewModelState
         }
     }
 

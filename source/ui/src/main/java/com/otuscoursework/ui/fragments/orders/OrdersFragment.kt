@@ -53,7 +53,7 @@ class OrdersFragment : BaseFragment<OrdersFragmentViewModel>() {
         }
     }
 
-    override fun renderState(state: BaseState) {
+    override fun renderState(state: BaseState?) {
         super.renderState(state)
 
         (state as OrdersFragmentState).apply {

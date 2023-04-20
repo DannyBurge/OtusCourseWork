@@ -22,8 +22,4 @@ class SaleFragment(
         //TODO("Not yet implemented")
     }
 
-    override fun renderState(state: BaseState) {
-        super.renderState(state)
-
-    }
 }

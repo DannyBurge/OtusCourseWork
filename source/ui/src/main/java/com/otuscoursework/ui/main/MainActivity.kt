@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.otuscoursework.ui.R
@@ -55,18 +56,6 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
-
-    private var progressDialog: OtusLoadingDialog? = null
-    fun showLoading() {
-        if (progressDialog == null) progressDialog = OtusLoadingDialog()
-        if (!progressDialog!!.isShown) progressDialog!!.show()
-    }
-
-    fun hideLoading() {
-        if (progressDialog == null) progressDialog = OtusLoadingDialog()
-        if (progressDialog!!.isShown) progressDialog!!.dismiss()
-    }
-
     private fun updateBorderPadding() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(activityBinding.mainActivityFragmentContainer) { _, windowInsets ->
@@ -74,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             val layoutParams =
                 ConstraintLayout.LayoutParams(resources.displayMetrics.widthPixels, insets.top)
             activityBinding.topStatusBarPanel.layoutParams = layoutParams
+            activityBinding.mainActivityFragmentContainer.updatePadding(bottom = insets.bottom)
             WindowInsetsCompat.CONSUMED
         }
     }

@@ -191,7 +191,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>(),
         viewModel.onOpen()
     }
 
-    override fun renderState(state: BaseState) {
+    override fun renderState(state: BaseState?) {
         super.renderState(state)
 
         (state as HomeFragmentState).apply {

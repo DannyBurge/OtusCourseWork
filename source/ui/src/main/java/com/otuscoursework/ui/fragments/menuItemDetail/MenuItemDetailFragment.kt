@@ -1,7 +1,5 @@
 package com.otuscoursework.ui.fragments.menuItemDetail
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -105,7 +106,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
                 setSafeOnClickListener { changeBehaviourState() }
             }
 
-            favouriteButton.apply {
+            favouriteDetailButton.apply {
                 setButtonType(ButtonType.FAVOURITE)
                 setSafeOnClickListener { changeFavouriteStatus() }
             }
@@ -157,7 +158,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
 
 
     private fun showFavouriteIndicator() {
-        fragmentBinding.favouriteButton.showIndicator(menuItem.isInFavourite)
+        fragmentBinding.favouriteDetailButton.showIndicator(menuItem.isInFavourite)
     }
 
     private lateinit var behavior: BottomSheetBehavior<View>
@@ -188,13 +189,22 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         }
         containerLayout?.addView(bottomPart.root)
 
+        var bottomSystemPanelHeight = 0
+        ViewCompat.setOnApplyWindowInsetsListener(fragmentBinding.root) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
+            bottomSystemPanelHeight = insets.bottom
+            WindowInsetsCompat.CONSUMED
+        }
+
+        fragmentBinding.root.updatePadding(bottom = bottomSystemPanelHeight)
         bottomPart.root.post {
             (coordinator?.layoutParams as ViewGroup.MarginLayoutParams).apply {
                 bottomPart.root.measure(
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
                 )
-                bottomMargin = bottomPart.root.height
+                bottomPart.root.updatePadding(bottom = bottomSystemPanelHeight)
+                bottomMargin = bottomPart.root.height + bottomSystemPanelHeight
                 containerLayout?.requestLayout()
             }
         }
@@ -204,7 +214,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
                 checkBackButtonWithState()
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) { }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
     }
 
@@ -244,9 +254,11 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
 
             weightFull.text = menuItem.subItems[selectedSizeIndex].weight.toString()
             ccalFull.text = (menuItem.foodValue.ccal.toInt() * weightRatio).toInt().toString()
-            proteinsFull.text = (menuItem.foodValue.proteins.toInt() * weightRatio).toInt().toString()
+            proteinsFull.text =
+                (menuItem.foodValue.proteins.toInt() * weightRatio).toInt().toString()
             fatsFull.text = (menuItem.foodValue.fats.toInt() * weightRatio).toInt().toString()
-            carbohydratesFull.text = (menuItem.foodValue.carbohydrates.toInt() * weightRatio).toInt().toString()
+            carbohydratesFull.text =
+                (menuItem.foodValue.carbohydrates.toInt() * weightRatio).toInt().toString()
             price.text =
                 getString(R.string.priceTagAccurate, menuItem.subItems[selectedSizeIndex].price)
         }

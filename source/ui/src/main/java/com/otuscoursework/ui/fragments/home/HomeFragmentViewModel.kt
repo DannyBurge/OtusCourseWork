@@ -112,7 +112,7 @@ class HomeFragmentViewModel @Inject constructor(
     }
 
     fun getFavouriteModeStatus(): Boolean {
-        return userDataKeeper.isFavouriteModeActive
+        return userDataKeeper.isFavouriteModeActive && userDataKeeper.userFavouriteItemIds?.isNotEmpty() == true
     }
 
     fun saveTokensAmount(amount: Int) {

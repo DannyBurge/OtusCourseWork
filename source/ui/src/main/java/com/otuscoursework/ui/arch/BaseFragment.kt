@@ -10,8 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.otuscourcework.utils.OtusLogger
-import com.otuscoursework.resource.ResHelper
-import com.otuscoursework.ui.main.MainActivity
 import com.otuscoursework.ui.navigation.CiceroneAppNavigator
 import com.otuscoursework.ui.views.loading_dialog.OtusLoadingDialog
 import kotlinx.coroutines.launch
@@ -54,13 +52,14 @@ abstract class BaseFragment<out V : BaseViewModel<*>> : Fragment() {
     open fun initObservers() {
         lifecycleScope.launch {
             viewModel.viewModelFlow.collect {
-                renderState(it as BaseState)
+                renderState(it as BaseState?)
             }
         }
     }
 
     @CallSuper
-    open fun renderState(state: BaseState) {
+    open fun renderState(state: BaseState?) {
+        if (state == null) return
         if (state.isLoading) showLoading() else hideLoading()
         if (state.errorMessage != null) showError(state.errorMessage!!)
     }
@@ -69,11 +68,14 @@ abstract class BaseFragment<out V : BaseViewModel<*>> : Fragment() {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
+    private var progressDialog: OtusLoadingDialog? = null
     private fun showLoading() {
-        MainActivity.INSTANCE.showLoading()
+        if (progressDialog == null) progressDialog = OtusLoadingDialog()
+        if (!progressDialog!!.isShown) progressDialog!!.showDialog(requireActivity().supportFragmentManager, OtusLoadingDialog.DIALOG_TAG)
     }
 
     private fun hideLoading() {
-        MainActivity.INSTANCE.hideLoading()
+        if (progressDialog == null) progressDialog = OtusLoadingDialog()
+        if (progressDialog!!.isShown) progressDialog!!.dismiss()
     }
 }

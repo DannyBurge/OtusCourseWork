@@ -10,8 +10,8 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.otuscoursework.ui.databinding.ViewLoadingDialogBinding
-import com.otuscoursework.ui.main.MainActivity
 
 class OtusLoadingDialog : DialogFragment() {
     private lateinit var dialogBinding: ViewLoadingDialogBinding
@@ -51,10 +51,10 @@ class OtusLoadingDialog : DialogFragment() {
 
     }
 
-    fun show() {
+    fun showDialog(fm: FragmentManager, tag: String) {
         isShown = true
         rotateAnimation.start()
-        this.show(MainActivity.INSTANCE.supportFragmentManager, DIALOG_TAG)
+        show(fm, tag)
     }
 
     override fun onDismiss(dialog: DialogInterface) {

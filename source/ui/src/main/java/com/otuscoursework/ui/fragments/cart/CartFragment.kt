@@ -183,7 +183,7 @@ class CartFragment : BaseFragment<CartFragmentViewModel>(),
         }
     }
 
-    override fun renderState(state: BaseState) {
+    override fun renderState(state: BaseState?) {
         super.renderState(state)
 
         (state as CartFragmentState).apply {

@@ -54,7 +54,7 @@ class NotificationFragment :
         }
     }
 
-    override fun renderState(state: BaseState) {
+    override fun renderState(state: BaseState?) {
         super.renderState(state)
 
         (state as NotificationFragmentState).apply {

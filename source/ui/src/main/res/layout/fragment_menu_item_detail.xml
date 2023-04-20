@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.otuscoursework.ui.views.badge_button.ButtonWithBadge
-            android:id="@+id/favouriteButton"
+            android:id="@+id/favouriteDetailButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_big"
@@ -38,7 +38,7 @@
             android:text="Роллы с яблоком и корицей"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/favouriteButton"
+            app:layout_constraintEnd_toStartOf="@+id/favouriteDetailButton"
             app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,8 +54,8 @@
 
         <ImageView
             android:id="@+id/menuItemImage"
-            android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/main_size_250"
+            android:layout_height="@dimen/main_size_150"
             android:background="@drawable/bg_card_panel"
             android:backgroundTint="@color/gray"
             android:elevation="@dimen/elevation"
@@ -93,9 +93,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_medium"
+                android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Итальянская классика! Сыр Моцарелла, шампиньоны, ароматная ветчина, сочные томаты с фирменным томатным соусом"
 
+                android:text="Итальянская классика! Сыр Моцарелла, шампиньоны, ароматная ветчина, сочные томаты с фирменным томатным соусом"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />
@@ -133,9 +134,9 @@
 
                 <TextView
                     android:id="@+id/weightPart"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:background="@drawable/bg_round_button"
 
                     android:backgroundTint="@color/black_transparent_5"
@@ -161,9 +162,9 @@
 
                 <TextView
                     android:id="@+id/weightFull"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
@@ -190,9 +191,9 @@
 
                 <TextView
                     android:id="@+id/ccalPart"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
@@ -216,9 +217,9 @@
 
                 <TextView
                     android:id="@+id/ccalFull"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
@@ -245,9 +246,9 @@
 
                 <TextView
                     android:id="@+id/proteinsPart"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
@@ -270,9 +271,9 @@
 
                 <TextView
                     android:id="@+id/proteinsFull"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
@@ -299,9 +300,9 @@
 
                 <TextView
                     android:id="@+id/fatsPart"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
@@ -324,9 +325,9 @@
 
                 <TextView
                     android:id="@+id/fatsFull"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
@@ -353,9 +354,9 @@
 
                 <TextView
                     android:id="@+id/carbohydratesPart"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
                     android:gravity="center"
@@ -378,9 +379,9 @@
 
                 <TextView
                     android:id="@+id/carbohydratesFull"
-                    style="@style/MediumText"
-                    android:layout_width="@dimen/main_size_48"
-                    android:layout_height="@dimen/main_size_48"
+                    style="@style/SmallText"
+                    android:layout_width="@dimen/main_size_32"
+                    android:layout_height="@dimen/main_size_32"
                     android:layout_marginTop="@dimen/margin_small"
                     android:background="@drawable/bg_round_button"
                     android:backgroundTint="@color/black_transparent_5"
