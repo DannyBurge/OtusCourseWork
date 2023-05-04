@@ -1,21 +1,22 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.detekt)
 }
 
 android {
     namespace 'com.otuscoursework'
-    compileSdk 33
+    compileSdkVersion libs.versions.compileSdk.get() as Integer
+    buildToolsVersion libs.versions.buildToolsVersion.get()
 
     defaultConfig {
         applicationId "com.otuscoursework"
-        minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        minSdk libs.versions.minSdk.get() as Integer
+        targetSdk libs.versions.targetSdk.get() as Integer
+        versionCode libs.versions.versionCode.get() as Integer
+        versionName libs.versions.appVersion.get()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -30,16 +31,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = libs.versions.jvmVersion.get()
     }
-    buildToolsVersion '33.0.1'
 }
 
 kapt {
@@ -47,25 +48,27 @@ kapt {
 }
 
 dependencies {
-    // Timber Kt https://github.com/ajalt/timberkt
-    implementation 'com.github.ajalt:timberkt:1.5.1'
-
     implementation project(':source:ui')
 
     // AndroidX
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation libs.bundles.androidx
 
-    // Material Design Components https://github.com/material-components/material-components-android
-    implementation 'com.google.android.material:material:1.8.0'
+    // Material Design Components
+    implementation libs.android.material
 
-    // Dagger Hilt https://dagger.dev/hilt/
-    implementation 'com.google.dagger:hilt-android:2.45'
-    kapt 'com.google.dagger:hilt-compiler:2.45'
+    // Dagger Hilt
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
 
     // For instrumented tests
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation "androidx.test:runner:1.5.2"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation libs.test.espressoCore
+    androidTestImplementation libs.test.ext
+
+    detektPlugins libs.detekt.formatting
+}
+
+detekt {
+    config = files("$rootDir/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    ignoreFailures = true
 }

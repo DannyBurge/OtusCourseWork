@@ -4,11 +4,11 @@ import androidx.core.view.isVisible
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.otuscourcework.utils.setSafeOnClickListener
 import com.otuscoursework.resource.R
+import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 import com.otuscoursework.ui.databinding.ItemChipBinding
 import com.otuscoursework.ui.databinding.ItemMenuBinding
 import com.otuscoursework.ui.fragments.home.ui_model.ChipItemUiModel
 import com.otuscoursework.ui.fragments.home.ui_model.MenuItemUiModel
-import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
@@ -20,7 +20,6 @@ object HomeAdapterDelegate {
         { layoutInflater, root -> ItemMenuBinding.inflate(layoutInflater, root, false) }) {
         bind {
             binding.apply {
-
                 Picasso.get().load(item.picture)
                     .fit()
                     .transform(

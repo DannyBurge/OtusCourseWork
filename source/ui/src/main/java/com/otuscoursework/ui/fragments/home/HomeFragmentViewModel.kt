@@ -1,7 +1,5 @@
 package com.otuscoursework.ui.fragments.home
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.otuscourcework.cart_keeper.CartKeeper
 import com.otuscourcework.network.NetworkRepository
@@ -14,9 +12,9 @@ import com.otuscoursework.resource.R
 import com.otuscoursework.ui.arch.BaseViewModel
 import com.otuscoursework.ui.fragments.home.ui_model.ChipItemUiModel
 import com.otuscoursework.ui.fragments.home.ui_model.MenuItemUiModel
-import com.otuscoursework.ui.models.MenuItemDetailModel
-import com.otuscoursework.ui.models.MenuItemFoodValueModel
-import com.otuscoursework.ui.models.MenuSubItemModel
+import com.otuscoursework.ui.fragments.menuItemDetail.MenuItemDetailModel
+import com.otuscoursework.ui.fragments.menuItemDetail.MenuItemFoodValueModel
+import com.otuscoursework.ui.fragments.menuItemDetail.MenuSubItemModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -78,7 +76,6 @@ class HomeFragmentViewModel @Inject constructor(
             }
 
             userDataKeeper.apiToken = security.encryptAes(validKey.key)
-
 
             val balanceCall = async { networkRepository.getUserBalanceHistory(true) }
             val chipsCall = async { networkRepository.getCategories() }

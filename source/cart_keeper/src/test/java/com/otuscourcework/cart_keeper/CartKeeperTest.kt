@@ -61,7 +61,6 @@ class CartKeeperTest {
             cartKeeper.getCartContent().values.sortedBy { it.id } == listOf4CartItems.sortedBy { it.id }
 
         assert(isEqual)
-
     }
 
     @Test

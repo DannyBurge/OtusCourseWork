@@ -2,7 +2,11 @@ package com.otuscoursework.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.otuscourcework.network.NetworkRepository
-import com.otuscourcework.network.models.*
+import com.otuscourcework.network.models.MenuItem
+import com.otuscourcework.network.models.MenuItemFoodValue
+import com.otuscourcework.network.models.MenuSubItem
+import com.otuscourcework.network.models.OrderItem
+import com.otuscourcework.network.models.OrderPosition
 import com.otuscourcework.utils.toFullIsoDate
 import com.otuscoursework.ui.fragments.cart.ui_model.CartItemUiModel
 import com.otuscoursework.ui.fragments.orders.OrdersFragmentViewModel
@@ -47,8 +51,6 @@ class OrdersFragmentViewModelTest {
         val isEquals = viewModel.viewModelState.orderList == testOrderItemList
         assert(isEquals)
     }
-
-
     companion object {
         private val currentDate = Date().toFullIsoDate()
 

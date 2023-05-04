@@ -122,7 +122,7 @@ class CartFragmentViewModel @Inject constructor(
     }
 
     fun getMaxTokensAddition(): Int {
-        return cartKeeper.getTotalPrice() / 10
+        return cartKeeper.getTotalPrice() / DISCOUNT_VALUE
     }
 
     fun getMaxDiscount(): Int {
@@ -169,5 +169,9 @@ class CartFragmentViewModel @Inject constructor(
                 }
             ).apply { render() }
         }
+    }
+
+    companion object {
+        private const val DISCOUNT_VALUE = 10
     }
 }

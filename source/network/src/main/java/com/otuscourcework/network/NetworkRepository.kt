@@ -1,7 +1,13 @@
 package com.otuscourcework.network
 
 import androidx.annotation.WorkerThread
-import com.otuscourcework.network.models.*
+import com.otuscourcework.network.models.BalanceHistoryItem
+import com.otuscourcework.network.models.CategoryItem
+import com.otuscourcework.network.models.MenuItem
+import com.otuscourcework.network.models.OrderItem
+import com.otuscourcework.network.models.UserDeliveryAddress
+import com.otuscourcework.network.models.ValidKey
+import com.otuscourcework.network.models.ValidateCodeItem
 import com.otuscourcework.utils.OtusLogger
 import javax.inject.Inject
 import javax.inject.Singleton

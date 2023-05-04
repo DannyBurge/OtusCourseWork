@@ -5,4 +5,4 @@ import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 data class TokenCartItemUiModel(
     override val id: Int,
     val amount: Int
-): RecyclerViewItem
+) : RecyclerViewItem

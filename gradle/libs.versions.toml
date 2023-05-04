@@ -1,0 +1,160 @@
+[versions]
+#App config
+appVersion = "1.0.0"
+versionCode = "1"
+
+jvmVersion = "17"
+detectVersion = "1.22.0"
+
+minSdk = "22"
+compileSdk = "33"
+targetSdk = "33"
+buildToolsVersion = "33.0.1"
+
+gradlePluginVersion = "8.0.1"
+kotlinVersion = "1.8.0"
+
+#AndroidX
+androidxCoreVersion = "1.9.0"
+androidxAppcompatVersion = "1.6.1"
+androidxConstraintlayoutVersion = "2.1.4"
+
+#Material Design Components
+materialLibsVersion = "1.8.0"
+
+#Dagger Hilt
+daggerHiltVersion = "2.45"
+
+#Network
+moshiVersion = "1.14.0"
+retrofitVersion = "2.9.0"
+chuckerVersion = "3.5.2"
+
+#Security
+securityVersion = "1.1.0-alpha01"
+biometricVersion = "1.2.0-alpha05"
+
+#Coroutines
+coroutineVersion = "1.6.4"
+
+#Lifecycle
+lifecycleVersion = "2.6.1"
+lifecycleExtensionsVersion = "2.2.0"
+
+#Navigation
+androidxNavigationVersion = "2.5.3"
+ciceroneVersion = "7.1"
+
+#Utils
+adapterDelegatesVersion = "4.3.2"
+picassoCoreVersion = "2.8"
+picassoTransformationsVersion = "2.4.0"
+timberVersion = "1.5.1"
+
+#Tests
+espressoCoreVersion = "3.5.1"
+runnerVersion = "1.5.2"
+extJunitVersion = "1.1.5"
+junitVersion = "4.13.2"
+mockitoVersion = "4.5.1"
+coreTestingVersion = "2.2.0"
+
+[libraries]
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradlePluginVersion" }
+#AndroidX
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCoreVersion" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppcompatVersion" }
+androidx-constrainLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintlayoutVersion" }
+
+#Material Design Components https://github.com/material-components/material-components-android
+android-material = { module = "com.google.android.material:material", version.ref = "materialLibsVersion" }
+
+#Dagger Hilt https://dagger.dev/hilt/
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "daggerHiltVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "daggerHiltVersion" }
+
+# Network
+# Moshi https://github.com/square/moshi
+moshi-core = { module = "com.squareup.moshi:moshi", version.ref = "moshiVersion" }
+moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshiVersion" }
+moshi-kotlinCodegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiVersion" }
+# Retrofit https://github.com/square/retrofit
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+retrofit-converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofitVersion" }
+# Chucker https://github.com/ChuckerTeam/chucker
+chucker-library = { module = "com.github.chuckerteam.chucker:library", version.ref = "chuckerVersion" }
+chucker-libraryNoOp = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chuckerVersion" }
+
+# Security https://developer.android.com/jetpack/androidx/releases/security
+security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityVersion" }
+# Biometric https://developer.android.com/jetpack/androidx/releases/biometric
+security-biometric = { module = "androidx.biometric:biometric-ktx", version.ref = "biometricVersion" }
+
+# Coroutines https://github.com/Kotlin/kotlinx.coroutines
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutineVersion" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutineVersion" }
+
+# ViewModel https://developer.android.com/jetpack/androidx/releases/lifecycle
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
+lifecycle-common = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycleVersion" }
+lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensionsVersion" }
+
+# Navigation https://developer.android.com/jetpack/androidx/releases/navigation
+navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigationVersion" }
+navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigationVersion" }
+# Navigation Cicerone https://github.com/terrakok/Cicerone
+navigation-cicerone = { module = "com.github.terrakok:cicerone", version.ref = "ciceroneVersion" }
+
+# AdapterDelegates https://github.com/sockeqwe/AdapterDelegates
+adapterdelegates = { module = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding", version.ref = "adapterDelegatesVersion" }
+
+# Picasso https://github.com/square/picasso
+picasso-core = { module = "com.squareup.picasso:picasso", version.ref = "picassoCoreVersion" }
+picasso-transformations = { module = "jp.wasabeef:picasso-transformations", version.ref = "picassoTransformationsVersion" }
+
+# Timber Kt https://github.com/ajalt/timberkt
+timberKt = { module = "com.github.ajalt:timberkt", version.ref = "timberVersion" }
+
+#Tests
+test-espressoCore = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+test-runner = { module = "androidx.test:runner", version.ref = "runnerVersion" }
+test-ext = { module = "androidx.test.ext:junit", version.ref = "extJunitVersion" }
+test-junit = { module = "junit:junit", version.ref = "junitVersion" }
+
+test-mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
+test-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoVersion" }
+test-coreTesting = { module = "androidx.arch.core:core-testing", version.ref = "coreTestingVersion" }
+test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutineVersion" }
+
+#Detekt
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detectVersion" }
+
+[bundles]
+#AndroidX
+androidx = ["androidx-core", "androidx-appcompat", "androidx-constrainLayout"]
+#Network
+network = ["retrofit-core", "retrofit-converter", "moshi-core", "moshi-adapters"]
+#Coroutines
+coroutines = ["coroutines-core", "coroutines-android"]
+#Lifecycle
+lifecycle = ["lifecycle-common", "lifecycle-viewmodel", "lifecycle-extensions"]
+# Picasso
+picasso = ["picasso-core", "picasso-transformations"]
+
+[plugins]
+#Android
+android-application = { id = "com.android.application", version.ref = "gradlePluginVersion" }
+android-library = { id = "com.android.library", version.ref = "gradlePluginVersion" }
+
+#Kotlin
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinVersion" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinVersion" }
+
+#Dagger
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHiltVersion" }
+
+#Detekt
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detectVersion" }

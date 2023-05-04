@@ -1,18 +1,18 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.detekt)
 }
 
 android {
     namespace 'com.otuscoursework.resource'
-    compileSdk 33
+    compileSdk libs.versions.compileSdk.get() as Integer
 
     defaultConfig {
-        minSdk 21
-        targetSdk 33
+        minSdk libs.versions.minSdk.get() as Integer
+        targetSdk libs.versions.targetSdk.get() as Integer
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -25,26 +25,27 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = libs.versions.jvmVersion.get()
     }
 }
 
 dependencies {
-    // Dagger Hilt https://dagger.dev/hilt/
-    implementation 'com.google.dagger:hilt-android:2.45'
-    kapt 'com.google.dagger:hilt-compiler:2.45'
+    //AndroidX
+    implementation libs.bundles.androidx
 
-    // Material Design Components https://github.com/material-components/material-components-android
-    implementation 'com.google.android.material:material:1.8.0'
+    // Dagger Hilt
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    detektPlugins libs.detekt.formatting
+}
+
+detekt {
+    config = files("$rootDir/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    ignoreFailures = true
 }

@@ -20,7 +20,6 @@ import com.otuscoursework.resource.R
 import com.otuscoursework.resource.ResHelper
 import com.otuscoursework.ui.databinding.FragmentMenuItemDetailBinding
 import com.otuscoursework.ui.databinding.ViewBottomSheetBottomBinding
-import com.otuscoursework.ui.models.MenuItemDetailModel
 import com.otuscoursework.ui.navigation.CiceroneAppNavigator
 import com.otuscoursework.ui.views.badge_button.ButtonType
 import com.otuscoursework.ui.views.size_changer.SizeChanger
@@ -32,10 +31,8 @@ import java.io.Serializable
 import java.lang.Integer.min
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MenuItemDetailFragment : BottomSheetDialogFragment() {
-
 
     @Inject
     lateinit var ciceroneAppNavigator: CiceroneAppNavigator
@@ -156,7 +153,6 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         }
     }
 
-
     private fun showFavouriteIndicator() {
         fragmentBinding.favouriteDetailButton.showIndicator(menuItem.isInFavourite)
     }
@@ -170,7 +166,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         val bottomSheet =
             dialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
         behavior = BottomSheetBehavior.from(bottomSheet)
-        behavior.peekHeight = (56 * density).toInt()
+        behavior.peekHeight = (PEEK_HEIGHT * density).toInt()
         behavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         val coordinator =
@@ -268,6 +264,7 @@ class MenuItemDetailFragment : BottomSheetDialogFragment() {
         const val DIALOG_TAG = "detailDialog"
 
         const val WEIGHT_100G = 100F
+        private const val PEEK_HEIGHT = 56
 
         private const val ITEM = "item"
         private const val FAVOURITE_STATUS_CHANGE_UNIT = "changeFavouriteUnit"

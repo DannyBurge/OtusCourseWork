@@ -11,5 +11,4 @@ object DiffUtilCallback : DiffUtil.ItemCallback<RecyclerViewItem>() {
     override fun areContentsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
         return oldItem == newItem
     }
-
 }

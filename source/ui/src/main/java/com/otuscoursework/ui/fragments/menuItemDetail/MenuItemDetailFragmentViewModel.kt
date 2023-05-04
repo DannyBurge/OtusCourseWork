@@ -3,7 +3,6 @@ package com.otuscoursework.ui.fragments.menuItemDetail
 import androidx.lifecycle.viewModelScope
 import com.otuscourcework.network.NetworkRepository
 import com.otuscoursework.ui.arch.BaseViewModel
-import com.otuscoursework.ui.models.MenuItemDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

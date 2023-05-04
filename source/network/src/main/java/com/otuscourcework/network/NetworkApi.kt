@@ -1,8 +1,19 @@
 package com.otuscourcework.network
 
-import com.otuscourcework.network.models.*
+import com.otuscourcework.network.models.BalanceHistoryItem
+import com.otuscourcework.network.models.CategoryItem
+import com.otuscourcework.network.models.MenuItem
+import com.otuscourcework.network.models.OrderItem
+import com.otuscourcework.network.models.UserDeliveryAddress
+import com.otuscourcework.network.models.ValidKey
+import com.otuscourcework.network.models.ValidateCodeItem
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Query
 
 interface NetworkApi {
     // auth

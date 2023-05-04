@@ -12,10 +12,8 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.otuscoursework.ui.R
 import com.otuscoursework.ui.databinding.ActivityMainBinding
 import com.otuscoursework.ui.navigation.CiceroneAppNavigator
-import com.otuscoursework.ui.views.loading_dialog.OtusLoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var ciceroneAppNavigator: CiceroneAppNavigator
-
 
     private val navigator = AppNavigator(this, R.id.mainActivityFragmentContainer)
 

@@ -2,8 +2,7 @@ package com.otuscoursework.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.otuscourcework.network.NetworkRepository
-import com.otuscourcework.network.models.*
-import com.otuscourcework.utils.toFullIsoDate
+import com.otuscourcework.network.models.UserDeliveryAddress
 import com.otuscoursework.ui.fragments.cart.CartFragmentViewModel
 import com.otuscoursework.ui.fragments.cart.ui_model.AddressItemUiModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +13,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 
@@ -33,7 +31,6 @@ class CartFragmentViewModelTest {
         whenever(networkRepository.getUserAddresses()).thenReturn(
             mockedAddressList
         )
-
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -44,19 +41,12 @@ class CartFragmentViewModelTest {
         assert(isEquals)
     }
 
-
     companion object {
 
         private val testAddress1 = AddressItemUiModel(
             id = 0,
             displayName = "Адрес 1",
             address = "Домашняя улица, 1"
-        )
-
-        private val testAddress2 = AddressItemUiModel(
-            id = 0,
-            displayName = "Адрес 2",
-            address = "Рабочая улица, 2"
         )
 
         private val userAddress1 = UserDeliveryAddress(

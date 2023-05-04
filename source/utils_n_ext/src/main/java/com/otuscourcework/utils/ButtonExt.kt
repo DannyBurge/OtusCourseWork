@@ -1,14 +1,16 @@
 package com.otuscourcework.utils
 
 import android.view.View
-import android.widget.Button
 
 fun View.enable(isEnabled: Boolean) {
     isClickable = isEnabled
     isFocusable = isEnabled
     alpha = if (isEnabled) {
-        1.0F
+        UN_TRANSPARENT
     } else {
-        0.5F
+        HALF_TRANSPARENT
     }
 }
+
+private const val HALF_TRANSPARENT = 0.5F
+private const val UN_TRANSPARENT = 1F

@@ -1,12 +1,9 @@
 package com.otuscourcework.network.di
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.otuscourcework.network.BuildConfig
 import com.otuscourcework.network.NetworkApi
 import com.otuscourcework.network.NetworkRepository
 import com.otuscourcework.network.NetworkRepository.Companion.BASE_URL
@@ -62,7 +59,6 @@ class NetworkRepositoryModule {
         userDataKeeper: UserDataKeeper,
         security: Security
     ): Interceptor {
-
         val apiToken = if (userDataKeeper.apiToken.isNullOrEmpty()) {
             null
         } else {
@@ -91,18 +87,11 @@ class NetworkRepositoryModule {
         apiInterceptor: Interceptor,
         chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
-        return if (BuildConfig.DEBUG) {
-
-            OkHttpClient
-                .Builder()
-                .addInterceptor(apiInterceptor)
-                .addInterceptor(chuckerInterceptor)
-                .build()
-        } else {
-            OkHttpClient
-                .Builder()
-                .build()
-        }
+        return OkHttpClient
+            .Builder()
+            .addInterceptor(apiInterceptor)
+            .addInterceptor(chuckerInterceptor)
+            .build()
     }
 
     @Provides
@@ -123,7 +112,7 @@ class NetworkRepositoryModule {
     @Provides
     @Singleton
     fun provideLogger(): OtusLogger {
-        return OtusLogger()
+        return OtusLogger().also { it.init() }
     }
 
     @Provides

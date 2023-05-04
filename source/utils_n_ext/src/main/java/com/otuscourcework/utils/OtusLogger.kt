@@ -4,6 +4,10 @@ import timber.log.Timber
 
 class OtusLogger {
 
+    fun init() {
+        Timber.plant(Timber.DebugTree())
+    }
+
     fun log(t: Throwable) {
         Timber.tag(DEBUG_TAG).d(t)
     }

@@ -12,6 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "OtusCourseWork"
 include ':app'
 include ':source:network'

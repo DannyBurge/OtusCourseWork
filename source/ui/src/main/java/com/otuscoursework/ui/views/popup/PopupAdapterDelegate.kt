@@ -24,7 +24,8 @@ object PopupAdapterDelegate {
 
     fun addAddressItemDelegate(itemClickCallback: (AddPopupUiItem) -> Unit) =
         adapterDelegateViewBinding<AddPopupUiItem, RecyclerViewItem, ItemAddPopupBinding>(
-            { layoutInflater, root -> ItemAddPopupBinding.inflate(layoutInflater, root, false) }) {
+            { layoutInflater, root -> ItemAddPopupBinding.inflate(layoutInflater, root, false) }
+        ) {
             bind {
                 binding.apply {
                     popupItemTextView.text = item.name

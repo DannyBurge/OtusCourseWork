@@ -4,7 +4,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties.*
+import android.security.keystore.KeyProperties.AUTH_BIOMETRIC_STRONG
+import android.security.keystore.KeyProperties.BLOCK_MODE_GCM
+import android.security.keystore.KeyProperties.ENCRYPTION_PADDING_NONE
+import android.security.keystore.KeyProperties.KEY_ALGORITHM_AES
+import android.security.keystore.KeyProperties.PURPOSE_DECRYPT
+import android.security.keystore.KeyProperties.PURPOSE_ENCRYPT
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricPrompt
 import java.security.KeyStore

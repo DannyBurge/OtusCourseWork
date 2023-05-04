@@ -41,7 +41,6 @@ class OrdersFragment : BaseFragment<OrdersFragmentViewModel>() {
         initRecyclerView()
     }
 
-
     private fun initRecyclerView() {
         fragmentBinding.apply {
             orderRecyclerView.apply {

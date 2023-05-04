@@ -8,14 +8,19 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
-import androidx.biometric.auth.*
+import androidx.biometric.auth.AuthPromptErrorException
+import androidx.biometric.auth.AuthPromptFailureException
+import androidx.biometric.auth.AuthPromptHost
+import androidx.biometric.auth.Class2BiometricAuthPrompt
+import androidx.biometric.auth.Class3BiometricAuthPrompt
+import androidx.biometric.auth.authenticate
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.otuscourcework.user_data_keeper.BiometricCipher
-import com.otuscourcework.user_data_keeper.UserDataKeeper
 import com.otuscourcework.user_data_keeper.Security
+import com.otuscourcework.user_data_keeper.UserDataKeeper
 import com.otuscoursework.resource.R
 import com.otuscoursework.ui.arch.BaseFragment
 import com.otuscoursework.ui.databinding.FragmentAuthBinding
@@ -35,7 +40,7 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
 
     private var isCreatePasswordMode: Boolean = false
 
-    private var passIndex = 0
+    private var passIndex = PASS_INDEX_0
     private val firstTryPass = mutableListOf<Int?>(null, null, null, null)
     private val secondTryPass = mutableListOf<Int?>(null, null, null, null)
 
@@ -63,8 +68,6 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
 
         fragmentBinding.authTitle.text =
             viewModel.resHelper.getStringById(R.string.auth_title_create_pass)
-
-
     }
 
     private fun initAuthMode() {
@@ -87,16 +90,16 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
         colorPassPanel(firstTryPass)
         fragmentBinding.root.isVisible = true
         fragmentBinding.apply {
-            oneButton.setOnClickListener { addDigit(1) }
-            twoButton.setOnClickListener { addDigit(2) }
-            threeButton.setOnClickListener { addDigit(3) }
-            fourButton.setOnClickListener { addDigit(4) }
-            fiveButton.setOnClickListener { addDigit(5) }
-            sixButton.setOnClickListener { addDigit(6) }
-            sevenButton.setOnClickListener { addDigit(7) }
-            eightButton.setOnClickListener { addDigit(8) }
-            nineButton.setOnClickListener { addDigit(9) }
-            zeroButton.setOnClickListener { addDigit(0) }
+            oneButton.setOnClickListener { addDigit(DIGIT_1) }
+            twoButton.setOnClickListener { addDigit(DIGIT_2) }
+            threeButton.setOnClickListener { addDigit(DIGIT_3) }
+            fourButton.setOnClickListener { addDigit(DIGIT_4) }
+            fiveButton.setOnClickListener { addDigit(DIGIT_5) }
+            sixButton.setOnClickListener { addDigit(DIGIT_6) }
+            sevenButton.setOnClickListener { addDigit(DIGIT_7) }
+            eightButton.setOnClickListener { addDigit(DIGIT_8) }
+            nineButton.setOnClickListener { addDigit(DIGIT_9) }
+            zeroButton.setOnClickListener { addDigit(DIGIT_0) }
             deleteDigitButton.setOnClickListener { deleteDigit() }
 
             fingerprintButton.setOnClickListener { initBiometricPrompt() }
@@ -118,8 +121,8 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
             if (checkPass()) {
                 ciceroneAppNavigator.toHomeScreen()
             } else {
-                if (passIndex == 3) {
-                    delay(500)
+                if (passIndex == PASS_INDEX_3) {
+                    delay(PASS_REPEAT_DELAY)
                     clearPass()
                 } else {
                     passIndex++
@@ -140,12 +143,12 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
                 colorPassPanel(secondTryPass)
             }
 
-            if (passIndex == 3) {
-                passIndex = 0
+            if (passIndex == PASS_INDEX_3) {
+                passIndex = PASS_INDEX_0
                 if (secondTryPass.none { it == null }) {
                     comparePasses()
                 } else {
-                    delay(500)
+                    delay(PASS_REPEAT_DELAY)
                     fragmentBinding.authTitle.text =
                         viewModel.resHelper.getStringById(R.string.auth_title_repeat_pass)
                     colorPassPanel(secondTryPass)
@@ -175,16 +178,16 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
     }
 
     private fun clearPass() {
-        passIndex = 0
-        firstTryPass[0] = null
-        firstTryPass[1] = null
-        firstTryPass[2] = null
-        firstTryPass[3] = null
+        passIndex = PASS_INDEX_0
+        firstTryPass[PASS_INDEX_0] = null
+        firstTryPass[PASS_INDEX_1] = null
+        firstTryPass[PASS_INDEX_2] = null
+        firstTryPass[PASS_INDEX_3] = null
 
-        secondTryPass[0] = null
-        secondTryPass[1] = null
-        secondTryPass[2] = null
-        secondTryPass[3] = null
+        secondTryPass[PASS_INDEX_0] = null
+        secondTryPass[PASS_INDEX_1] = null
+        secondTryPass[PASS_INDEX_2] = null
+        secondTryPass[PASS_INDEX_3] = null
         colorPassPanel(firstTryPass)
     }
 
@@ -198,7 +201,7 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
     private fun checkFingerprintButtonVisibility() {
         fragmentBinding.deleteDigitButton.isVisible = passIndex != 0
         fragmentBinding.fingerprintButton.isVisible =
-            passIndex == 0 && viewModel.userDataKeeper.isBiometricAuthActive
+            passIndex == PASS_INDEX_0 && viewModel.userDataKeeper.isBiometricAuthActive
     }
 
     private fun checkPass(): Boolean {
@@ -208,17 +211,16 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
     }
 
     private fun colorPassPanel(pass: List<Int?>) {
-        otusLogger.log(passIndex)
         fragmentBinding.apply {
             getColorMask(pass).forEachIndexed { index, colorId ->
                 val color = viewModel.resHelper.getColor(colorId)
                 val drawable = viewModel.resHelper.getDrawable(R.drawable.bg_round_button)
                 DrawableCompat.setTint(drawable, color)
                 when (index) {
-                    0 -> firstPassDigit.background = drawable
-                    1 -> secondPassDigit.background = drawable
-                    2 -> thirdPassDigit.background = drawable
-                    3 -> fourthPassDigit.background = drawable
+                    PASS_INDEX_0 -> firstPassDigit.background = drawable
+                    PASS_INDEX_1 -> secondPassDigit.background = drawable
+                    PASS_INDEX_2 -> thirdPassDigit.background = drawable
+                    PASS_INDEX_3 -> fourthPassDigit.background = drawable
                 }
             }
         }
@@ -235,7 +237,7 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
     }
 
     private fun initBiometricPrompt() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             val success = BiometricManager
                 .from(requireContext())
                 .canAuthenticate(BIOMETRIC_WEAK) == BIOMETRIC_SUCCESS
@@ -304,6 +306,23 @@ class AuthFragment : BaseFragment<AuthFragmentViewModel>() {
     }
 
     companion object {
+        private const val DIGIT_0 = 0
+        private const val DIGIT_1 = 1
+        private const val DIGIT_2 = 2
+        private const val DIGIT_3 = 3
+        private const val DIGIT_4 = 4
+        private const val DIGIT_5 = 5
+        private const val DIGIT_6 = 6
+        private const val DIGIT_7 = 7
+        private const val DIGIT_8 = 8
+        private const val DIGIT_9 = 9
+
+        private const val PASS_INDEX_0 = 0
+        private const val PASS_INDEX_1 = 1
+        private const val PASS_INDEX_2 = 2
+        private const val PASS_INDEX_3 = 3
+        private const val PASS_REPEAT_DELAY = 500L
+
         private const val IS_CREATE_PASSWORD_MODE = "isCreatePasswordMode"
 
         fun newInstance(isCreatePasswordMode: Boolean): AuthFragment {

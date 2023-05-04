@@ -29,7 +29,7 @@ class NavigationModule {
 
     @Provides
     @Singleton
-    fun provideAppNavigator() : CiceroneAppNavigator {
+    fun provideAppNavigator(): CiceroneAppNavigator {
         return CiceroneAppNavigator(cicerone.router)
     }
 }

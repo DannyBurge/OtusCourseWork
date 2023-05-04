@@ -24,7 +24,9 @@ class PopupMenuWithList(
     var onAddPopupMenuItemClickListener: OnAddPopupMenuItemClickListener? = null
 
     private val popupBinding = ViewPopupMenuBinding.inflate(
-        LayoutInflater.from(context), null, false
+        LayoutInflater.from(context),
+        null,
+        false
     )
     private val bodyWindow: PopupWindow = PopupWindow(
         popupBinding.root,

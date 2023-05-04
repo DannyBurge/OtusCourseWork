@@ -9,7 +9,12 @@ import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.security.crypto.MasterKey
 import java.math.BigInteger
-import java.security.*
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.KeyStore
+import java.security.PrivateKey
+import java.security.PublicKey
+import java.security.SecureRandom
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -152,7 +157,6 @@ class Keys @Inject constructor(
             MasterKey.Builder(applicationContext)
                 .setKeyGenParameterSpec(spec)
                 .build()
-
         } else {
             MasterKey.Builder(applicationContext)
                 .setKeyScheme(keyScheme)

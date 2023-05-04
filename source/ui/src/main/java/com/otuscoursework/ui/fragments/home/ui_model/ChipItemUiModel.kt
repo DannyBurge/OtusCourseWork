@@ -6,4 +6,4 @@ data class ChipItemUiModel(
     override val id: Int,
     val name: String,
     var isSelected: Boolean
-): RecyclerViewItem
+) : RecyclerViewItem

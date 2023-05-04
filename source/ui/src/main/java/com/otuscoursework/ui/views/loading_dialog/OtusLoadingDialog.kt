@@ -39,16 +39,15 @@ class OtusLoadingDialog : DialogFragment() {
 
     private fun initRotation() {
         rotateAnimation = RotateAnimation(
-            0f,
-            359f,
+            START_ROTATE,
+            END_ROTATE,
             Animation.RELATIVE_TO_SELF,
-            0.5f,
+            AXIS_PIVOT,
             Animation.RELATIVE_TO_SELF,
-            0.5f
+            AXIS_PIVOT
         )
-        rotateAnimation.duration = 5000
+        rotateAnimation.duration = ANIMATION_DURATION
         rotateAnimation.interpolator = LinearInterpolator()
-
     }
 
     fun showDialog(fm: FragmentManager, tag: String) {
@@ -65,5 +64,10 @@ class OtusLoadingDialog : DialogFragment() {
 
     companion object {
         const val DIALOG_TAG = "otusLoadingDialog"
+
+        private const val ANIMATION_DURATION = 5000L
+        private const val AXIS_PIVOT = 0.5F
+        private const val START_ROTATE = 0F
+        private const val END_ROTATE = 359F
     }
 }

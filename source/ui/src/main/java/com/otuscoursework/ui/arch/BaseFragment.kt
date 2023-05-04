@@ -71,7 +71,12 @@ abstract class BaseFragment<out V : BaseViewModel<*>> : Fragment() {
     private var progressDialog: OtusLoadingDialog? = null
     private fun showLoading() {
         if (progressDialog == null) progressDialog = OtusLoadingDialog()
-        if (!progressDialog!!.isShown) progressDialog!!.showDialog(requireActivity().supportFragmentManager, OtusLoadingDialog.DIALOG_TAG)
+        if (!progressDialog!!.isShown) {
+            progressDialog!!.showDialog(
+                requireActivity().supportFragmentManager,
+                OtusLoadingDialog.DIALOG_TAG
+            )
+        }
     }
 
     private fun hideLoading() {

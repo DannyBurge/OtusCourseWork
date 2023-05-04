@@ -10,20 +10,18 @@ import com.otuscourcework.utils.enable
 import com.otuscourcework.utils.setSafeOnClickListener
 import com.otuscoursework.resource.R
 import com.otuscoursework.ui.arch.BaseFragment
+import com.otuscoursework.ui.arch.BaseState
+import com.otuscoursework.ui.arch.recycler.BaseDelegationAdapter
+import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 import com.otuscoursework.ui.databinding.FragmentCartBinding
 import com.otuscoursework.ui.fragments.cart.ui_model.CartItemUiModel
-import com.otuscoursework.ui.navigation.CiceroneAppNavigator
-import com.otuscoursework.ui.arch.BaseState
 import com.otuscoursework.ui.views.badge_button.ButtonType
 import com.otuscoursework.ui.views.dialog.OtusDialogFragment
 import com.otuscoursework.ui.views.popup.PopupMenuWithList
 import com.otuscoursework.ui.views.popup.ui_model.AddPopupUiItem
 import com.otuscoursework.ui.views.popup.ui_model.PopupUiItem
 import com.otuscoursework.ui.views.size_changer.SizeChanger
-import com.otuscoursework.ui.arch.recycler.BaseDelegationAdapter
-import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment<CartFragmentViewModel>(),
@@ -40,7 +38,6 @@ class CartFragment : BaseFragment<CartFragmentViewModel>(),
     private fun createCartAdapter(): BaseDelegationAdapter {
         return BaseDelegationAdapter(CartAdapterDelegate.cartDelegate())
     }
-
 
     override fun initBinding(): View {
         fragmentBinding = FragmentCartBinding.inflate(layoutInflater, null, false)

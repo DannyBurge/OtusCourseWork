@@ -1,15 +1,9 @@
 package com.otuscourcework.user_data_keeper
 
-import android.os.Build
-import android.security.keystore.KeyProperties
-import android.util.Base64
-import androidx.annotation.RequiresApi
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.spec.AlgorithmParameterSpec
-import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
-import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 
 class Security @Inject constructor(

@@ -11,7 +11,6 @@ class UserDataKeeper @Inject constructor(
     context: Context,
     keys: Keys
 ) {
-
     private val sharedPrefs: SharedPreferences by lazy {
         EncryptedSharedPreferences.create(
             context.applicationContext,
@@ -24,26 +23,31 @@ class UserDataKeeper @Inject constructor(
 
     var hashPassword: String?
         get() = sharedPrefs.getString(HASH_PASSWORD, null)
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(HASH_PASSWORD, value) }
 
     var passwordKey: String?
         get() = sharedPrefs.getString(CRYPTO_PASS_KEY, "")
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(CRYPTO_PASS_KEY, value) }
 
     var apiToken: String?
         get() = sharedPrefs.getString(API_TOKEN, "")
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(API_TOKEN, value) }
 
     var address: String
         get() = sharedPrefs.getString(ADDRESS, "") ?: ""
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putString(ADDRESS, value) }
 
     var tokensAmount: Int?
         get() = sharedPrefs.getInt(TOKENS_AMOUNT, 0)
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) { putInt(TOKENS_AMOUNT, value ?: 0) }
 
@@ -51,6 +55,7 @@ class UserDataKeeper @Inject constructor(
         get() = sharedPrefs.getString(FAVOURITE_ITEMS_LIST, null)
             ?.split(STRING_SEPARATOR)
             ?.map { it.toInt() }
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
             putString(
@@ -61,6 +66,7 @@ class UserDataKeeper @Inject constructor(
 
     var isFavouriteModeActive: Boolean
         get() = sharedPrefs.getBoolean(IS_FAVOURITE_MODE_ACTIVE, false)
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
             putBoolean(IS_FAVOURITE_MODE_ACTIVE, value)
@@ -68,6 +74,7 @@ class UserDataKeeper @Inject constructor(
 
     var isAuthActive: Boolean
         get() = sharedPrefs.getBoolean(IS_AUTH_ACTIVE, false)
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
             putBoolean(IS_AUTH_ACTIVE, value)
@@ -75,11 +82,11 @@ class UserDataKeeper @Inject constructor(
 
     var isBiometricAuthActive: Boolean
         get() = sharedPrefs.getBoolean(IS_BIOMETRIC_AUTH_ACTIVE, false)
+
         @Synchronized
         set(value) = sharedPrefs.edit(commit = COMMIT_PREF) {
             putBoolean(IS_BIOMETRIC_AUTH_ACTIVE, value)
         }
-
 
     companion object {
         private const val API_TOKEN = "token"

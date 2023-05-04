@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class BaseViewModel<S>: ViewModel() {
+abstract class BaseViewModel<S> : ViewModel() {
 
     @Inject
     lateinit var resHelper: ResHelper

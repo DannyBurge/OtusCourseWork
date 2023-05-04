@@ -1,4 +1,4 @@
-package com.otuscoursework.ui.models
+package com.otuscoursework.ui.fragments.menuItemDetail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -31,4 +31,3 @@ data class MenuItemFoodValueModel(
     val fats: String,
     val carbohydrates: String,
 ) : Parcelable
-

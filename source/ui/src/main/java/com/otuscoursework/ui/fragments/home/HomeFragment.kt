@@ -2,10 +2,8 @@ package com.otuscoursework.ui.fragments.home
 
 import android.annotation.SuppressLint
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,13 +19,11 @@ import com.otuscoursework.ui.databinding.FragmentHomeBinding
 import com.otuscoursework.ui.fragments.home.ui_model.ChipItemUiModel
 import com.otuscoursework.ui.fragments.home.ui_model.MenuItemUiModel
 import com.otuscoursework.ui.fragments.menuItemDetail.MenuItemDetailFragment
-import com.otuscoursework.ui.models.*
 import com.otuscoursework.ui.views.badge_button.ButtonType
 import com.otuscoursework.ui.views.dialog.OtusDialogFragment
 import com.otuscoursework.ui.views.popup.PopupMenuWithList
 import com.otuscoursework.ui.views.popup.ui_model.PopupUiItem
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -260,7 +256,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>(),
         menuItemUiModelList[index].isInFavourite = item.isInFavourite
         if (getFavouriteModeStatus()) populateMenuRecyclerView() else updateMenuItem(item)
         viewModel.changeItemFavouriteStatus(item)
-
     }
 
     private fun onModeChanged() {
@@ -303,7 +298,8 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>(),
                 } else {
                     menuItemUiModelList
                 }
-            })
+            }
+                    )
             notifyDataSetChanged()
         }
     }
@@ -312,8 +308,8 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel>(),
         when (item.id) {
             SHOW_ALL_ID -> {
                 viewModel.saveFavouriteModeStatus(isActive = false)
-
             }
+
             SHOW_FAVOURITE_ID -> {
                 viewModel.saveFavouriteModeStatus(isActive = true)
 

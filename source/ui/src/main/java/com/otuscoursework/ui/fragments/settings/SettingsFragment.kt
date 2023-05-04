@@ -57,7 +57,6 @@ class SettingsFragment : BaseFragment<SettingsFragmentViewModel>() {
                         if (viewModel.userDataKeeper.hashPassword == null) {
                             ciceroneAppNavigator.toAuthScreen(isCreatePasswordMode = true)
                         }
-
                     } else {
                         viewModel.userDataKeeper.hashPassword = null
                         fingerprintModeSwitch.isChecked = false

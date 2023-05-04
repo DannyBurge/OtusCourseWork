@@ -5,17 +5,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.otuscourcework.utils.setSafeOnClickListener
 import com.otuscoursework.resource.R
+import com.otuscoursework.ui.arch.recycler.BaseDelegationAdapter
+import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 import com.otuscoursework.ui.databinding.ItemOrderBinding
 import com.otuscoursework.ui.fragments.cart.CartAdapterDelegate
 import com.otuscoursework.ui.fragments.cart.ui_model.TokenCartItemUiModel
 import com.otuscoursework.ui.fragments.orders.ui_model.OrderItemUiModel
-import com.otuscoursework.ui.arch.recycler.BaseDelegationAdapter
-import com.otuscoursework.ui.arch.recycler.RecyclerViewItem
 
 object OrderAdapterDelegate {
     fun orderDelegate() =
         adapterDelegateViewBinding<OrderItemUiModel, RecyclerViewItem, ItemOrderBinding>(
-            { layoutInflater, root -> ItemOrderBinding.inflate(layoutInflater, root, false) }) {
+            { layoutInflater, root -> ItemOrderBinding.inflate(layoutInflater, root, false) }
+        ) {
             bind {
                 val orderPositionAdapter = BaseDelegationAdapter(
                     CartAdapterDelegate.cartDelegate(),
