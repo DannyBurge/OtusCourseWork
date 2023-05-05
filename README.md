@@ -118,3 +118,5 @@
 * Многомодульность
 * Gradle Version Catalog
 * Detekt
+* JUnit + Mockito
+* Espresso
