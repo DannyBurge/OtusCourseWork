@@ -61,10 +61,12 @@
 
 <br clear="right"/>
 
-* Выбрать текущий адрес доставки или добавить новый
+###
 
 <img src="https://i.imgur.com/0q9xwis.png" align="right" width="200px"/> 
 <img src="https://i.imgur.com/MlLRdbo.png" align="right" width="200px"/> 
+
+* Выбрать текущий адрес доставки или добавить новый
 
 <br clear="right"/>
 
@@ -80,6 +82,8 @@
 
 <br clear="right"/>
 
+---
+
 ### 6. Уведомления:
 
 <img src="https://i.imgur.com/PYvycA1.png" align="right" width="200px"/> 
@@ -87,6 +91,8 @@
 * При нажатии на уведомление переход на нужный заказ
 
 <br clear="right"/>
+
+---
 
 ### 7. Настройки:
 
