@@ -55,8 +55,8 @@
 <img src="https://i.imgur.com/bPtGepc.png" align="right" width="200px"/> 
 <img src="https://i.imgur.com/DfQbe8O.png" align="right" width="200px"/> 
 
-* Потратить или получить бонусы
-* Отправить заказ
+* Списать или получить бонусы
+* Создать заказ
 * Очистить корзину
 
 <br clear="right"/>
@@ -88,7 +88,7 @@
 
 <img src="https://i.imgur.com/PYvycA1.png" align="right" width="200px"/> 
 
-* При нажатии на уведомление переход на нужный заказ
+* При нажатии на уведомление выполняется переход на нужный заказ
 
 <br clear="right"/>
 
